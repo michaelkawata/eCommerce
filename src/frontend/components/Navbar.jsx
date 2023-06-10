@@ -67,32 +67,32 @@ const MenuItem = styled.div`
 const Navbar = () => {
   return (
     <Container>
-        <Wrapper>
+      <Wrapper>
         <Left>
           <Language>
             EN
           </Language>
           <SearchContainer>
             <Input />
-            <Search style={{color:"gray", fontSize: "16px"}}/>
+            <Search style={{ color: "gray", fontSize: "16px" }} />
           </SearchContainer>
         </Left>
         <Center>
           <Logo>
-            Marlons
+            MCM
           </Logo>
         </Center>
         <Right>
           <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN</MenuItem>
           <MenuItem>
-          {/* badge and mail icon from material ui */}
-              <Badge badgeContent={4} color="primary">
-                  <ShoppingCartOutlinedIcon />
-              </Badge>
+            {/* badge and mail icon from material ui */}
+            <Badge badgeContent={4} color="primary">
+              <ShoppingCartOutlinedIcon />
+            </Badge>
           </MenuItem>
         </Right>
-        </Wrapper>
+      </Wrapper>
     </Container>
   );
 }

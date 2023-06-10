@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LoginImage from "../images/login-page.jpg"
+import LoginImage from "../assets/images/login-page.jpg"
 
 const Container = styled.div`
   width: 100vw;
@@ -56,18 +56,18 @@ const Link = styled.a`
 
 const Login = () => {
   return (
-      <Container>
-        <Wrapper>
-          <Title>SIGN IN</Title>
-          <Form>
-            <Input placeholder="Username"/>
-            <Input placeholder="Password"/>
-            <Button>LOGIN</Button>
-            <Link>Forgot Password?</Link>
-             <Link>Create New Account</Link>
-          </Form>
-        </Wrapper>
-      </Container>
+    <Container>
+      <Wrapper>
+        <Title>SIGN IN</Title>
+        <Form>
+          <Input placeholder="Username" />
+          <Input placeholder="Password" />
+          <Button>LOGIN</Button>
+          <Link>Forgot Password?</Link>
+          <Link>Create New Account</Link>
+        </Form>
+      </Wrapper>
+    </Container>
   );
 }
 

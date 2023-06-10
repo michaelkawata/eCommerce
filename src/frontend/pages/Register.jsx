@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import RegisterImage from "../images/register-page.jpg"
+import RegisterImage from "../assets/images/register-page.jpg"
 
 const Container = styled.div`
   width: 100vw;
@@ -54,23 +54,23 @@ const Button = styled.button`
 
 const Register = () => {
   return (
-      <Container>
-        <Wrapper>
-          <Title>CREATE AN ACCOUNT</Title>
-          <Form>
-            <Input placeholder="First Name"/>
-            <Input placeholder="Last Name"/>
-            <Input placeholder="Username"/>
-            <Input placeholder="Email"/>
-            <Input placeholder="Password"/>
-            <Input placeholder="Confirm Password"/>
-            <Agreement>
-              By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
-            </Agreement>
-            <Button>CREATE ACCOUNT</Button>
-          </Form>
-        </Wrapper>
-      </Container>
+    <Container>
+      <Wrapper>
+        <Title>CREATE AN ACCOUNT</Title>
+        <Form>
+          <Input placeholder="First Name" />
+          <Input placeholder="Last Name" />
+          <Input placeholder="Username" />
+          <Input placeholder="Email" />
+          <Input placeholder="Password" />
+          <Input placeholder="Confirm Password" />
+          <Agreement>
+            By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
+          </Agreement>
+          <Button>CREATE ACCOUNT</Button>
+        </Form>
+      </Wrapper>
+    </Container>
   );
 }
 

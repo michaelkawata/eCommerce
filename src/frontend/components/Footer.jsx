@@ -77,71 +77,71 @@ const ContactItem = styled.div`
   align-items: center;
 `
 
-const Payment= styled.img`
+const Payment = styled.img`
   width: 50%;
 `
 
 
-const Footer = ({item}) => {
+const Footer = ({ item }) => {
   return (
-      <Container>
-        <Left>
-          <Logo>Marlons</Logo>
-          <Description>where style meets comfort,
-            offers a wide range of trendy and high-quality clothing for men and women,
-            perfect for every occasion with Marlons
-          </Description>
-          <SocialContainer>
-            <SocialIcon color="3B5999">
-              <Facebook />
-            </SocialIcon>
-            <SocialIcon color="E4405F">
-              <Instagram />
-            </SocialIcon>
-            <SocialIcon color="55ACEE">
-              <Twitter />
-            </SocialIcon>
-            <SocialIcon color="E60023">
-              <Pinterest />
-            </SocialIcon>
-          </SocialContainer>
-        </Left>
-        <Center>
-          <Title>
-            Useful Links
-          </Title>
-          <List>
-            <ListItem>Home</ListItem>
-            <ListItem>Cart</ListItem>
-            <ListItem>Men Fashion</ListItem>
-            <ListItem>Women Fashion</ListItem>
-            <ListItem>Accessories</ListItem>
-            <ListItem>My Account</ListItem>
-            <ListItem>Order Tracking</ListItem>
-            <ListItem>Wishlist</ListItem>
-            <ListItem>Terms</ListItem>
-          </List>
-        </Center>
-        <Right>
-          <Title>
-            Contact
-          </Title>
-          <ContactItem>
-            <FmdGood style={{marginRight: "10px"}}/>
-            1901 E Second St., Santa Ana 92705
-          </ContactItem>
-          <ContactItem>
-            <Phone style={{marginRight: "10px"}} />
-            +1 594 302 4293
-          </ContactItem>
-          <ContactItem>
-            <MailOutline style={{marginRight: "10px"}} />
-            contactandshop@marlons.dev
-          </ContactItem>
-          <Payment src={require("../images/card-page.jpeg")} />
-        </Right>
+    <Container>
+      <Left>
+        <Logo>Marlons</Logo>
+        <Description>where style meets comfort,
+          offers a wide range of trendy and high-quality clothing for men and women,
+          perfect for every occasion with Marlons
+        </Description>
+        <SocialContainer>
+          <SocialIcon color="3B5999">
+            <Facebook />
+          </SocialIcon>
+          <SocialIcon color="E4405F">
+            <Instagram />
+          </SocialIcon>
+          <SocialIcon color="55ACEE">
+            <Twitter />
+          </SocialIcon>
+          <SocialIcon color="E60023">
+            <Pinterest />
+          </SocialIcon>
+        </SocialContainer>
+      </Left>
+      <Center>
+        <Title>
+          Useful Links
+        </Title>
+        <List>
+          <ListItem>Home</ListItem>
+          <ListItem>Cart</ListItem>
+          <ListItem>Men Fashion</ListItem>
+          <ListItem>Women Fashion</ListItem>
+          <ListItem>Accessories</ListItem>
+          <ListItem>My Account</ListItem>
+          <ListItem>Order Tracking</ListItem>
+          <ListItem>Wishlist</ListItem>
+          <ListItem>Terms</ListItem>
+        </List>
+      </Center>
+      <Right>
+        <Title>
+          Contact
+        </Title>
+        <ContactItem>
+          <FmdGood style={{ marginRight: "10px" }} />
+          1901 E Second St., Santa Ana 92705
+        </ContactItem>
+        <ContactItem>
+          <Phone style={{ marginRight: "10px" }} />
+          +1 594 302 4293
+        </ContactItem>
+        <ContactItem>
+          <MailOutline style={{ marginRight: "10px" }} />
+          contactandshop@marlons.dev
+        </ContactItem>
+        <Payment src={require("../assets/images/card-page.jpg")} />
+      </Right>
 
-      </Container>
+    </Container>
   );
 }
 

@@ -34,11 +34,11 @@ const TopButton = styled.button`
   color: ${props => props.type === "filled" && "white"};
 `
 
-const TopTexts= styled.div`
+const TopTexts = styled.div`
 
 `
 
-const TopText= styled.span`
+const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
   margin: 0 10px;
@@ -96,7 +96,7 @@ const ProductColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: ${props=>props.color};
+  background-color: ${props => props.color};
 `
 
 const ProductSize = styled.div`
@@ -110,58 +110,58 @@ const PriceDetail = styled.div`
 
 const Cart = () => {
   return (
-      <Container>
-        <Navbar />
-        <Announcement />
-        <Wrapper>
-          <Title>
-            YOUR CART
-          </Title>
-          <Top>
-            <TopButton>
-              CONTINUE SHOPPING
-            </TopButton>
-            <TopTexts>
-              <TopText>Shopping Bag(2)</TopText>
-              <TopText>Your Wishlist (0)</TopText>
-            </TopTexts>
-            <TopButton type="filled">
-              CHECKOUT NOW
-            </TopButton>
+    <Container>
+      <Navbar />
+      <Announcement />
+      <Wrapper>
+        <Title>
+          YOUR CART
+        </Title>
+        <Top>
+          <TopButton>
+            CONTINUE SHOPPING
+          </TopButton>
+          <TopTexts>
+            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Your Wishlist (0)</TopText>
+          </TopTexts>
+          <TopButton type="filled">
+            CHECKOUT NOW
+          </TopButton>
 
-          </Top>
-          <Bottom>
-            <Info>
-              <Product>
-                <ProductDetails>
-                  <Image src={require("../images/your-bag-image.jpg")}/>
-                  <Details>
-                    <ProductName>
-                      <b>Product: </b> 2015 Converse Limited Edition
-                    </ProductName>
-                    <ProductId>
-                      <b>ID: </b> 234235
-                    </ProductId>
-                    <ProductColor color="black"/>
-                    <ProductSize>
-                      <b>Size: </b> Large
-                    </ProductSize>
-                  </Details>
-                </ProductDetails>
-                <PriceDetails>
-                  <PriceDetail>
-                    Price
-                  </PriceDetail>
-                </PriceDetails>
-              </Product>
-            </Info>
-            <Summary>
-              Summary
-            </Summary>
-          </Bottom>
-        </Wrapper>
-        <Footer />
-      </Container>
+        </Top>
+        <Bottom>
+          <Info>
+            <Product>
+              <ProductDetails>
+                <Image src={require("../assets/images/your-bag-image.jpg")} />
+                <Details>
+                  <ProductName>
+                    <b>Product: </b> 2015 Converse Limited Edition
+                  </ProductName>
+                  <ProductId>
+                    <b>ID: </b> 234235
+                  </ProductId>
+                  <ProductColor color="black" />
+                  <ProductSize>
+                    <b>Size: </b> Large
+                  </ProductSize>
+                </Details>
+              </ProductDetails>
+              <PriceDetails>
+                <PriceDetail>
+                  Price
+                </PriceDetail>
+              </PriceDetails>
+            </Product>
+          </Info>
+          <Summary>
+            Summary
+          </Summary>
+        </Bottom>
+      </Wrapper>
+      <Footer />
+    </Container>
   );
 }
 

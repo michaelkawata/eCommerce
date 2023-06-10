@@ -122,66 +122,66 @@ const Button = styled.button`
 
 const Product = () => {
   return (
-      <Container>
-        <Navbar />
-        <Announcement />
-        <Wrapper>
-          <ImageContainer>
-            <Image src={require("../images/product-page.jpg")} />
-          </ImageContainer>
-          <InfoContainer>
-            <Title>
-              Pokadot Dress
-              </Title>
-            <ProductDescription>
-              Step out in style with our elegant Polka Dot Dress,
-              featuring a classic design adorned with playful polka dots. This dress is perfect for any occasion,
-              whether it's a casual outing or a special event.
-              Embrace timeless fashion with our Polka Dot Dress and make a statement wherever you go.
-              </ProductDescription>
-              <Price>
-                $25
-              </Price>
-              <FilterContainer>
-                <Filter>
-                  <FilterTitle>
-                    Color
-                  </FilterTitle>
-                  <FilterColor color="#000">
+    <Container>
+      <Navbar />
+      <Announcement />
+      <Wrapper>
+        <ImageContainer>
+          <Image src={require("../assets/images/product-page.jpg")} />
+        </ImageContainer>
+        <InfoContainer>
+          <Title>
+            Pokadot Dress
+          </Title>
+          <ProductDescription>
+            Step out in style with our elegant Polka Dot Dress,
+            featuring a classic design adorned with playful polka dots. This dress is perfect for any occasion,
+            whether it's a casual outing or a special event.
+            Embrace timeless fashion with our Polka Dot Dress and make a statement wherever you go.
+          </ProductDescription>
+          <Price>
+            $25
+          </Price>
+          <FilterContainer>
+            <Filter>
+              <FilterTitle>
+                Color
+              </FilterTitle>
+              <FilterColor color="#000">
 
-                  </FilterColor>
-                  <FilterColor color="darkblue">
+              </FilterColor>
+              <FilterColor color="darkblue">
 
-                  </FilterColor>
-                  <FilterColor color="gray">
+              </FilterColor>
+              <FilterColor color="gray">
 
-                  </FilterColor>
-                </Filter>
-                <Filter>
-                  <FilterTitle>
-                    Size
-                  </FilterTitle>
-                  <FilterSize>
-                    <FilterSizeOption>S</FilterSizeOption>
-                    <FilterSizeOption>M</FilterSizeOption>
-                    <FilterSizeOption>L</FilterSizeOption>
-                    <FilterSizeOption>XL</FilterSizeOption>
-                  </FilterSize>
-                </Filter>
-              </FilterContainer>
-              <AddContainer>
-                <AmountContainer>
-                  <Remove />
-                  <Amount>1</Amount>
-                  <Add />
-                </AmountContainer>
-                <Button>ADD TO CART</Button>
-              </AddContainer>
-          </InfoContainer>
-        </Wrapper>
-        <Newsletter />
-        <Footer />
-      </Container>
+              </FilterColor>
+            </Filter>
+            <Filter>
+              <FilterTitle>
+                Size
+              </FilterTitle>
+              <FilterSize>
+                <FilterSizeOption>S</FilterSizeOption>
+                <FilterSizeOption>M</FilterSizeOption>
+                <FilterSizeOption>L</FilterSizeOption>
+                <FilterSizeOption>XL</FilterSizeOption>
+              </FilterSize>
+            </Filter>
+          </FilterContainer>
+          <AddContainer>
+            <AmountContainer>
+              <Remove />
+              <Amount>1</Amount>
+              <Add />
+            </AmountContainer>
+            <Button>ADD TO CART</Button>
+          </AddContainer>
+        </InfoContainer>
+      </Wrapper>
+      <Newsletter />
+      <Footer />
+    </Container>
   );
 }
 
