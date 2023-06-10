@@ -86,10 +86,10 @@ const Footer = ({ item }) => {
   return (
     <Container>
       <Left>
-        <Logo>Marlons</Logo>
+        <Logo>MCM</Logo>
         <Description>where style meets comfort,
           offers a wide range of trendy and high-quality clothing for men and women,
-          perfect for every occasion with Marlons
+          perfect for every occasion.
         </Description>
         <SocialContainer>
           <SocialIcon color="3B5999">
