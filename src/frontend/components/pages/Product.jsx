@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
-import Announcement from "../components/Announcement";
-import Newsletter from "../components/Newsletter";
-import Footer from "../components/Footer";
+import Navbar from "../Navbar";
+import Announcement from "../Announcement";
+import Newsletter from "../Newsletter";
+import Footer from "../Footer";
 import { Add, Remove } from "@mui/icons-material";
 
 const Container = styled.div`
@@ -127,7 +127,7 @@ const Product = () => {
       <Announcement />
       <Wrapper>
         <ImageContainer>
-          <Image src={require("../assets/images/product-page.jpg")} />
+          <Image src={require("../../assets/images/product-page.jpg")} />
         </ImageContainer>
         <InfoContainer>
           <Title>

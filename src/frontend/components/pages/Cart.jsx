@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
+import Navbar from "../Navbar";
+import Announcement from "../Announcement";
+import Footer from "../Footer";
 
 
 
@@ -134,7 +134,7 @@ const Cart = () => {
           <Info>
             <Product>
               <ProductDetails>
-                <Image src={require("../assets/images/your-bag-image.jpg")} />
+                <Image src={require("../../assets/images/your-bag-image.jpg")} />
                 <Details>
                   <ProductName>
                     <b>Product: </b> 2015 Converse Limited Edition

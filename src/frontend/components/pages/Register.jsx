@@ -1,18 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import LoginImage from "../assets/images/login-page.jpg"
+import RegisterImage from "../../assets/images/register-page.jpg"
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: url(${LoginImage});
+  background: url(${RegisterImage}) top;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
 `
+
 const Wrapper = styled.div`
-  width: 25%;
+  width: 40%;
   padding: 20px;
   background-color: #fff;
 `
@@ -24,15 +25,19 @@ const Title = styled.h1`
 
 const Form = styled.form`
   display: flex;
-  flex-direction: column;
-
+  flex-wrap: wrap;
 `
 
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
-  margin: 10px 0;
+  margin: 20px 10px 0 0;
   padding: 10px;
+`
+
+const Agreement = styled.span`
+  font-size: 12px;
+  margin: 20px 0;
 `
 
 const Button = styled.button`
@@ -42,33 +47,31 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
-  margin-bottom: 10px;
 
 `
 
-const Link = styled.a`
-  margin: 5px 0;
-  font-size: 12px;
-  text-decoration: underline;
-  cursor: pointer;
 
-`
 
-const Login = () => {
+const Register = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>SIGN IN</Title>
+        <Title>CREATE AN ACCOUNT</Title>
         <Form>
+          <Input placeholder="First Name" />
+          <Input placeholder="Last Name" />
           <Input placeholder="Username" />
+          <Input placeholder="Email" />
           <Input placeholder="Password" />
-          <Button>LOGIN</Button>
-          <Link>Forgot Password?</Link>
-          <Link>Create New Account</Link>
+          <Input placeholder="Confirm Password" />
+          <Agreement>
+            By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
+          </Agreement>
+          <Button>CREATE ACCOUNT</Button>
         </Form>
       </Wrapper>
     </Container>
   );
 }
 
-export default Login;
+export default Register;
