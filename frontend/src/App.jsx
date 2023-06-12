@@ -13,7 +13,7 @@ const App = () => {
 const [backendData, setBackendData] = useState([{}]);
 
 useEffect(() => {
-  fetch('/api').then(
+  fetch('/').then(
     response => response.json()
   ).then(
     data => {
