@@ -1,10 +1,9 @@
 const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     //Entry point
-    entry: './src/frontend/index.jsx',
+    entry: './src/index.jsx',
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
     },
@@ -21,7 +20,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(jsx|js)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 include: path.resolve(__dirname, 'src'),
                 exclude: /node_modules/,
                 use: [{
@@ -31,16 +30,31 @@ module.exports = {
                             ['@babel/preset-env', {
                                 "targets": "defaults"
                             }],
-                            '@babel/preset-react'
+                            '@babel/preset-react',
+                            '@babel/preset-typescript'
                         ]
                     }
                 }]
             },
-
-            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            { 
+                test: /\.css$/, 
+                use: ['style-loader', 'css-loader'] 
+            },
             {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader'
+            },
+            {
+                test: /\.(png|jpe?g|gif|woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'assets/',
+                }
             }
         ]
     }

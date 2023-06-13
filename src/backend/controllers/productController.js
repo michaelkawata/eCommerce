@@ -1,46 +1,47 @@
-const Product = require('../models/Product');
+const product = require('express').Router()
+const db = require('../../models')
+const { Product } = db
 
-// Display list of all Products.
-exports.product_list = function(req, res) {
-    Product.find({}, function(err, products) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send(products);
-    });
-};
+// FIND ALL Products
+products.get('/', async (req, res) => {
+    try {
+        const result = []
+        const foundProducts = await Product.findAll();
+        for (let i = 0; i < foundProducts.length; i++) {
+            result.push({
+                product: foundProducts[i],
+            })
+        }       
+        res.status(200).json(result)
 
-// Display detail page for a specific Product.
-exports.product_detail = function(req, res) {
-    let id = req.params.id;
-    Product.findById(id, function(err, product) {
-        if (err) return res.status(500).send(err);
-        if (!product) return res.status(404).send("No product found.");
-        res.status(200).send(product);
-    });
-};
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
-// Handle Product create on POST.
-exports.product_create = function(req, res) {
-    Product.create(req.body, function(err, product) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send(product);
-    });
-};
+// FIND A SPECIFIC Products
 
-// Handle Product delete on DELETE.
-exports.product_delete = function(req, res) {
-    let id = req.params.id;
-    Product.findByIdAndRemove(id, function(err) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send("Product deleted successfully.");
-    });
-};
+products.get('/:id', async (req, res) => {
+    try {
+        const foundProduct = await Product.findOne({
+            where: { id: req.params.id },
+        })
+        res.status(200).json({ product: foundProduct })
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
-// Handle Product update on PUT.
-exports.product_update = function(req, res) {
-    let id = req.params.id;
-    Product.findByIdAndUpdate(id, req.body, {new: true}, function(err, product) {
-        if (err) return res.status(500).send(err);
-        if (!product) return res.status(404).send("No product found.");
-        res.status(200).send(product);
-    });
-};
+// CREATE A Products
+products.post('/onlymarlonmichaelandchristhegreat', async (req, res) => {
+    try {
+        console.log(req.body)
+        const newProduct = await Product.create(req.body)
+        res.status(201).json({
+            message: 'Successfully inserted a new Product',
+            data: newProduct
+        })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
