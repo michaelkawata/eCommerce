@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import RegisterImage from "../../assets/images/register-page.jpg"
 
+import { mobileSmall } from "../../responsive"
+import { mobileLarge } from "../../responsive"
+import { tablet } from "../../responsive"
+
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -12,11 +17,12 @@ const Container = styled.div`
   justify-content: center;
 `
 
-
 const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: #fff;
+  ${mobileLarge({ width: "75%" })}
+  ${tablet({ width: "55%" })}
 `
 
 const Title = styled.h1`
@@ -48,6 +54,7 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  ${mobileSmall({ width: "100%" })}
 
 `
 
@@ -55,23 +62,23 @@ const Button = styled.button`
 
 const Register = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="First Name" />
-          <Input placeholder="Last Name" />
-          <Input placeholder="Username" />
-          <Input placeholder="Email" />
-          <Input placeholder="Password" />
-          <Input placeholder="Confirm Password" />
-          <Agreement>
-            By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
-          </Agreement>
-          <Button>CREATE ACCOUNT</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+      <Container>
+        <Wrapper>
+          <Title>CREATE AN ACCOUNT</Title>
+          <Form>
+            <Input placeholder="First Name"/>
+            <Input placeholder="Last Name"/>
+            <Input placeholder="Username"/>
+            <Input placeholder="Email"/>
+            <Input placeholder="Password"/>
+            <Input placeholder="Confirm Password"/>
+            <Agreement>
+              By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
+            </Agreement>
+            <Button>CREATE ACCOUNT</Button>
+          </Form>
+        </Wrapper>
+      </Container>
   );
 }
 

@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import LoginImage from "../../assets/images/login-page.jpg"
 
+import { mobileSmall } from "../../responsive"
+import { mobileLarge } from "../../responsive"
+import { tablet } from "../../responsive"
+
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -15,6 +20,8 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: #fff;
+  ${mobileLarge({ width: "75%" })}
+  ${tablet({ width: "55%" })}
 `
 
 const Title = styled.h1`
@@ -43,6 +50,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  ${mobileSmall({ width: "70%" })}
 
 `
 
@@ -56,18 +64,18 @@ const Link = styled.a`
 
 const Login = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input placeholder="Username" />
-          <Input placeholder="Password" />
-          <Button>LOGIN</Button>
-          <Link>Forgot Password?</Link>
-          <Link>Create New Account</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form>
+            <Input placeholder="Username"/>
+            <Input placeholder="Password"/>
+            <Button>LOGIN</Button>
+            <Link>Forgot Password?</Link>
+             <Link>Create New Account</Link>
+          </Form>
+        </Wrapper>
+      </Container>
   );
 }
 

@@ -1,25 +1,33 @@
-import React from 'react'; // Import React
-import { Routes, Route } from 'react-router-dom';
-import Product from './components/pages/Product';
-import Home from './components/pages/Home';
-import ProductList from './components/pages/ProductList';
-import Register from './components/pages/Register';
-import Login from './components/pages/Login';
-import Cart from './components/pages/Cart';
+import Product from "./components/pages/Product";
+import Home from "./components/pages/Home";
+import ProductList from "./components/pages/ProductList";
+import Register from "./components/pages/Register";
+import Login from "./components/pages/Login";
+import Cart from "./components/pages/Cart";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 
 const App = () => {
+  const user = true
   return (
-    <div>
+   <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="products" element={<ProductList />} />
-        <Route path="products/:productId" element={<Product />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-        <Route path="cart" element={<Cart />} />
+        <Route path="/products/:category" element={<ProductList />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/" /> : <Register />}
+        />
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
-    </div>
-  );
-};
+    </Router>
+    )
+}
 
 export default App;

@@ -4,6 +4,13 @@ import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
+import { mobile } from "../responsive"
+import { mobileSmall } from "../responsive"
+import { mobileLarge } from "../responsive"
+import { tablet } from "../responsive"
+import { screenLarge } from "../responsive"
+
+
 
 
 const Info = styled.div`
@@ -21,6 +28,8 @@ const Info = styled.div`
   transition: all 0.5s ease;
     border-radius: 3px;
 
+  ${mobileSmall({ width: "80%", height: "80%", top: "10%", left: "10%"  })}
+
 `
 
 const Container = styled.div`
@@ -32,11 +41,14 @@ const Container = styled.div`
   display: flex;
 
   align-items: center;
-  // justify-content: space-between;
   justify-content: center;
   background-color: #f5fbfd;
   position: relative;
   border-radius: 3px;
+  ${mobileSmall({ width: "50px", height: "100px"  })}
+  ${mobile({ minWidth: "250px", height: "250px" })}
+  ${screenLarge({ minWidth: "20%"})}
+
 
   &:hover ${Info}{
     opacity: 1;
@@ -56,7 +68,10 @@ const Container = styled.div`
 const Image = styled.img`
   height: 80%;
   z-index: 2;
-
+  ${mobileSmall({ height: "80%"  })}
+  ${mobile({ height: "90%" })}
+  ${mobileLarge({ height: "100%"  })}
+  ${tablet({ height: "60%"})}
 `
 
 const Icon = styled.div`
@@ -70,7 +85,7 @@ const Icon = styled.div`
   margin: 10px;
   transition: all 0.5s ease;
   cursor: pointer;
-
+  ${mobileSmall({ width: "50px", height: "50px" })}
 
   &:hover{
     background-color: #e9f5f5;
