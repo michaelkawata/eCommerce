@@ -16,9 +16,35 @@ export const mobile = (props) => {
   `
 }
 
+export const mobileLarge = (props) => {
+  return css`
+    @media only screen and (max-width: 550px) {
+      ${props}
+    }
+  `
+}
+
 export const tabletSmall = (props) => {
   return css`
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 820px) {
+      ${props}
+    }
+  `
+}
+
+
+export const tablet = (props) => {
+  return css`
+    @media only screen and (max-width: 1300px) {
+      ${props}
+    }
+  `
+}
+
+
+export const screenLarge = (props) => {
+  return css`
+    @media only screen and (min-width: 1540px) {
       ${props}
     }
   `

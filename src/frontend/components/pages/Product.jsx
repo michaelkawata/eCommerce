@@ -6,6 +6,10 @@ import Newsletter from "../Newsletter";
 import Footer from "../Footer";
 import { Add, Remove } from "@mui/icons-material";
 
+import { mobile } from "../responsive"
+import { mobileLarge } from "../responsive"
+import { tablet } from "../responsive"
+
 const Container = styled.div`
 
 `
@@ -13,21 +17,27 @@ const Container = styled.div`
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
+  ${mobileLarge({ padding: "10px", flexDirection: "column" })}
 `
 
 const ImageContainer = styled.div`
   flex: 1;
+  ${mobileLarge({ display: "flex", justifyContent: "center"})}
 `
 
 const Image = styled.img`
   width: 100%;
   height: 90vh;
   object-fit: cover;
+  ${mobile({ height: "40vh" })}
+   ${mobileLarge({ height: "60vh", width: "80%" })}
+   ${tablet({ height: "100%", width: "100%" })}
 `
 
 const InfoContainer = styled.div`
     flex: 1;
     padding: 0 50px;
+    ${mobile({ padding: "10px" })}
 `
 
 const Title = styled.h1`
@@ -50,6 +60,8 @@ const FilterContainer = styled.div`
   margin: 30px 0;
   display: flex;
   justify-content: space-between;
+  ${mobile({ width: "100%" })}
+  ${mobileLarge({ width: "60%" })}
 `
 
 const Filter = styled.div`
@@ -85,6 +97,8 @@ const AddContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${mobileLarge({ width: "100%" })}
+
 `
 
 const AmountContainer = styled.div`
@@ -122,66 +136,66 @@ const Button = styled.button`
 
 const Product = () => {
   return (
-    <Container>
-      <Navbar />
-      <Announcement />
-      <Wrapper>
-        <ImageContainer>
-          <Image src={require("../../assets/images/product-page.jpg")} />
-        </ImageContainer>
-        <InfoContainer>
-          <Title>
-            Pokadot Dress
-          </Title>
-          <ProductDescription>
-            Step out in style with our elegant Polka Dot Dress,
-            featuring a classic design adorned with playful polka dots. This dress is perfect for any occasion,
-            whether it's a casual outing or a special event.
-            Embrace timeless fashion with our Polka Dot Dress and make a statement wherever you go.
-          </ProductDescription>
-          <Price>
-            $25
-          </Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>
-                Color
-              </FilterTitle>
-              <FilterColor color="#000">
+      <Container>
+        <Navbar />
+        <Announcement />
+        <Wrapper>
+          <ImageContainer>
+            <Image src={require("../images/product-page.jpg")} />
+          </ImageContainer>
+          <InfoContainer>
+            <Title>
+              Pokadot Dress
+              </Title>
+            <ProductDescription>
+              Step out in style with our elegant Polka Dot Dress,
+              featuring a classic design adorned with playful polka dots. This dress is perfect for any occasion,
+              whether it's a casual outing or a special event.
+              Embrace timeless fashion with our Polka Dot Dress and make a statement wherever you go.
+              </ProductDescription>
+              <Price>
+                $25
+              </Price>
+              <FilterContainer>
+                <Filter>
+                  <FilterTitle>
+                    Color
+                  </FilterTitle>
+                  <FilterColor color="#000">
 
-              </FilterColor>
-              <FilterColor color="darkblue">
+                  </FilterColor>
+                  <FilterColor color="darkblue">
 
-              </FilterColor>
-              <FilterColor color="gray">
+                  </FilterColor>
+                  <FilterColor color="gray">
 
-              </FilterColor>
-            </Filter>
-            <Filter>
-              <FilterTitle>
-                Size
-              </FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
-            </AmountContainer>
-            <Button>ADD TO CART</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
-      <Newsletter />
-      <Footer />
-    </Container>
+                  </FilterColor>
+                </Filter>
+                <Filter>
+                  <FilterTitle>
+                    Size
+                  </FilterTitle>
+                  <FilterSize>
+                    <FilterSizeOption>S</FilterSizeOption>
+                    <FilterSizeOption>M</FilterSizeOption>
+                    <FilterSizeOption>L</FilterSizeOption>
+                    <FilterSizeOption>XL</FilterSizeOption>
+                  </FilterSize>
+                </Filter>
+              </FilterContainer>
+              <AddContainer>
+                <AmountContainer>
+                  <Remove />
+                  <Amount>1</Amount>
+                  <Add />
+                </AmountContainer>
+                <Button>ADD TO CART</Button>
+              </AddContainer>
+          </InfoContainer>
+        </Wrapper>
+        <Newsletter />
+        <Footer />
+      </Container>
   );
 }
 
