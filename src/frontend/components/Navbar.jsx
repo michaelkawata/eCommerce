@@ -106,7 +106,7 @@ const Navbar = () => {
         </Left>
         <Center>
           <Logo>
-            Marlons
+            MCM
           </Logo>
         </Center>
         <Right>

@@ -95,7 +95,7 @@ const Footer = ({item}) => {
   return (
       <Container>
         <Left>
-          <Logo>Marlons</Logo>
+          <Logo>MCM</Logo>
           <Description>where style meets comfort,
             offers a wide range of trendy and high-quality clothing for men and women,
             perfect for every occasion with Marlons
@@ -145,7 +145,7 @@ const Footer = ({item}) => {
           </ContactItem>
           <ContactItem>
             <MailOutline style={{marginRight: "10px"}} />
-            contactandshop@marlons.dev
+            contactandshop@mcm.dev
           </ContactItem>
         <Payment src={require("../assets/images/card-page.jpg")} />
       </Right>
