@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import LoginImage from "../../assets/images/login-page.jpg"
 
-import { mobileSmall } from "../responsive"
-import { mobileLarge } from "../responsive"
-import { tablet } from "../responsive"
+import { mobileSmall } from "../../responsive"
+import { mobileLarge } from "../../responsive"
+import { tablet } from "../../responsive"
 
 
 const Container = styled.div`

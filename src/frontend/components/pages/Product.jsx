@@ -6,9 +6,9 @@ import Newsletter from "../Newsletter";
 import Footer from "../Footer";
 import { Add, Remove } from "@mui/icons-material";
 
-import { mobile } from "../responsive"
-import { mobileLarge } from "../responsive"
-import { tablet } from "../responsive"
+import { mobile } from "../../responsive"
+import { mobileLarge } from "../../responsive"
+import { tablet } from "../../responsive"
 
 const Container = styled.div`
 
@@ -141,7 +141,7 @@ const Product = () => {
         <Announcement />
         <Wrapper>
           <ImageContainer>
-            <Image src={require("../images/product-page.jpg")} />
+            <Image src={require("../../assets/images/product-page.jpg")} />
           </ImageContainer>
           <InfoContainer>
             <Title>

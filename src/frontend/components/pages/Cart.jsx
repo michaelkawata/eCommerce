@@ -5,7 +5,7 @@ import Announcement from "../Announcement";
 import Footer from "../Footer";
 import { Add, Remove } from "@mui/icons-material";
 
-import { mobile } from "../responsive"
+import { mobile } from "../../responsive"
 
 
 

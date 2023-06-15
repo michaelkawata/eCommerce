@@ -1,9 +1,9 @@
-import Product from "./pages/Product";
-import Home from "./pages/Home";
-import ProductList from "./pages/ProductList";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Cart from "./pages/Cart";
+import Product from "./components/pages/Product";
+import Home from "./components/pages/Home";
+import ProductList from "./components/pages/ProductList";
+import Register from "./components/pages/Register";
+import Login from "./components/pages/Login";
+import Cart from "./components/pages/Cart";
 import {
   BrowserRouter as Router,
   Routes,

@@ -7,7 +7,7 @@ import Newsletter from "../Newsletter";
 import Footer from "../Footer";
 
 
-import { mobileLarge } from "../responsive"
+import { mobileLarge } from "../../responsive"
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
