@@ -217,6 +217,7 @@ const Cart = () => {
               CHECKOUT NOW
             </TopButton>
 
+<<<<<<< HEAD
           </Top>
           <Bottom>
             <Info>
@@ -317,6 +318,41 @@ const Cart = () => {
         </Wrapper>
         <Footer />
       </Container>
+=======
+        </Top>
+        <Bottom>
+          <Info>
+            <Product>
+              <ProductDetails>
+                <Image src={require("../../assets/images/your-bag-image.jpg")} />
+                <Details>
+                  <ProductName>
+                    <b>Product: </b> 2023 Converse Limited Edition
+                  </ProductName>
+                  <ProductId>
+                    <b>ID: </b> 234235
+                  </ProductId>
+                  <ProductColor color="black" />
+                  <ProductSize>
+                    <b>Size: </b> Large
+                  </ProductSize>
+                </Details>
+              </ProductDetails>
+              <PriceDetails>
+                <PriceDetail>
+                  Price
+                </PriceDetail>
+              </PriceDetails>
+            </Product>
+          </Info>
+          <Summary>
+            Summary
+          </Summary>
+        </Bottom>
+      </Wrapper>
+      <Footer />
+    </Container>
+>>>>>>> 454067f47d6192b4c5f939020c903413a0d1aea3
   );
 }
 
