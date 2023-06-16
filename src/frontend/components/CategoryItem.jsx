@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { mobile } from "../responsive"
-import { mobileSmall } from "../responsive"
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   flex: 1;
@@ -15,8 +12,6 @@ const Image = styled.img`
   height: 100%;
   // **fitting images to more natural form**
   object-fit: cover;
-  ${mobile({ height: "20vh" })};\
-  ${mobileSmall({ height: "15vh" })};
 `
 const Info = styled.div`
   position: absolute;
@@ -34,7 +29,6 @@ const Title = styled.div`
   margin-bottom: 20px;
   font-weight: bolder;
   font-size: 2.5rem;
-  ${mobileSmall({ fontSize: "1rem" })};
 `
 const Button = styled.button`
   border: none;
@@ -55,7 +49,6 @@ const Button = styled.button`
 const CategoryItem = ({item}) => {
   return (
         <Container>
-          <Link to={`/products/${item.cat}`}>
           <Image src={item.img}/>
           <Info>
             <Title>
@@ -63,7 +56,6 @@ const CategoryItem = ({item}) => {
             </Title>
             <Button>SHOP NOW</Button>
           </Info>
-          </Link>
         </Container>
   );
 }

@@ -2,10 +2,6 @@ import { Send } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
 
-import { mobile } from "../responsive"
-import { mobileSmall } from "../responsive"
-import { tabletSmall } from "../responsive"
-
 const Container = styled.div`
   height: 60vh;
   background-color: #fcf5f5;
@@ -19,16 +15,13 @@ const Title = styled.h1`
   font-size: 70px;
   margin-bottom: 20px;
   letter-spacing: 3px;
-  ${mobile({ fontSize: "55px" })}
-  ${mobileSmall({ fontSize: "45px"  })}
 `
 
 const Description = styled.div`
   font-size: 24px;
   font-weight: 300;
   margin-bottom: 20px;
-  ${tabletSmall({ textAlign: "center" })}
-  ${mobileSmall({ fontSize: "20px" })}
+
 `
 
 const InputContainer = styled.div`
@@ -38,8 +31,6 @@ const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   border: 1px solid lightgrey;
-  ${mobile({ width: "80%" })}
-
 `
 
 const Input = styled.input`
@@ -47,7 +38,7 @@ const Input = styled.input`
   flex: 8;
   padding-left: 20px;
   font-size: 1.05rem;
-  ${mobileSmall({ width: "50%" })}
+
 `
 
 const Button = styled.button`

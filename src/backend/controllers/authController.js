@@ -24,11 +24,14 @@ const register = async (req, res) => {
 // Login User
 const login = async (req, res) => {
     try {
-        const user = await User.findOne ({ username: req.body.username });
+        const user = await User.findOne({ username: req.body.username });
+        console.log('authController login ', req.body, user);
         !user && res.status(401).json("Wrong credentials!");
 
-        const hashedPassword = CryptoJS.AES.decrypt( user.password, process.env.PASS_SEC );
+        const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SEC);
         const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+
+        console.log('original password', OriginalPassword);
 
         OriginalPassword !== req.body.password && res.status(401).json("Wrong credentials!");
 
@@ -38,9 +41,12 @@ const login = async (req, res) => {
             { expiresIn: "3d" }
         );
 
+        console.log('accessToken', accessToken);
+
         const { password, ...others } = user._doc;
         res.status(200).json({ ...others, accessToken });
     } catch (err) {
+        console.log('authController login error', err);
         res.status(500).json(err);
 
     }

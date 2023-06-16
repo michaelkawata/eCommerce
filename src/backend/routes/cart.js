@@ -18,10 +18,12 @@ router.put("/:id", verifyTokenAndAuthorization, cartController.updateCart);
 router.delete("/:id", verifyTokenAndAuthorization, cartController.deleteCart);
 
 // Route for getting a specific user's cart. Accessible only by the cart owner or an admin
-router.get("/find/:userId", verifyTokenAndAuthorization, cartController.getUserCart);
+router.get("/find/:userId", cartController.getUserCart);
+// router.get("/find/:userId", verifyTokenAndAuthorization, cartController.getUserCart);
 
 // Route for getting all carts. Only accessible by an admin
-router.get("/", verifyTokenAndAdmin, cartController.getAllCarts);
+router.get("/", cartController.getAllCarts);
+// router.get("/", verifyTokenAndAdmin, cartController.getAllCarts);
 
 
 module.exports = router;

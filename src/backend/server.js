@@ -6,6 +6,8 @@ const app = express();
 const Product = require('./models/Product'); // Assuming you have a Product model
 const User = require('./models/User'); // Assuming you have a User model
 const PORT = process.env.PORT || 5000;
+console.log('PORT --------------------', PORT);
+const authController = require('./controllers/authController');
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://chriseun:Soccer99!@cluster0.mxjdtil.mongodb.net/Cluster0?retryWrites=true&w=majority', {
@@ -30,7 +32,7 @@ app.get('/products/:id', async (req, res) => {
   if (product) {
     res.json(product);
   } else {
-    res.status(404).json({message: 'Product not found.'});
+    res.status(404).json({ message: 'Product not found.' });
   }
 });
 
@@ -46,15 +48,18 @@ app.post('/register', async (req, res) => {
 
 // User login
 app.post('/login', async (req, res) => {
-  const user = await User.findOne({email: req.body.email, password: req.body.password});
+  console.log('server login req res', req.body);
+  // authController.login(req, res);
+  const user = await User.findOne({ username: req.body.username, password: req.body.password });
+  console.log('server post login', user);
   if (user) {
-    res.json({message: 'Login successful!'}); 
+    res.json({ message: 'Login successful!' });
   } else {
-    res.status(401).json({message: 'Invalid email or password.'});
+    res.status(401).json({ message: 'Invalid email or password.' });
   }
 });
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
