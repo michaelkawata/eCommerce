@@ -137,7 +137,7 @@ const Cart = () => {
                 <Image src={require("../../assets/images/your-bag-image.jpg")} />
                 <Details>
                   <ProductName>
-                    <b>Product: </b> 2015 Converse Limited Edition
+                    <b>Product: </b> 2023 Converse Limited Edition
                   </ProductName>
                   <ProductId>
                     <b>ID: </b> 234235

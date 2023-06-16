@@ -1,11 +1,11 @@
 import React from 'react'; // Import React
 import { Routes, Route } from 'react-router-dom';
-import Product from './frontend/components/pages/Product';
-import Home from './frontend/components/pages/Home';
-import ProductList from './frontend/components/pages/ProductList';
-import Register from './frontend/components/pages/Register';
-import Login from './frontend/components/pages/Login';
-import Cart from './frontend/components/pages/Cart';
+import Product from './components/pages/Product';
+import Home from './components/pages/Home';
+import ProductList from './components/pages/ProductList';
+import Register from './components/pages/Register';
+import Login from './components/pages/Login';
+import Cart from './components/pages/Cart';
 
 const App = () => {
   return (
