@@ -1,47 +1,76 @@
-const Product = require('../models/Product');
+const Product = require("../models/Product");
 
-// Display list of all Products.
-exports.product_list = function (req, res) {
-    Product.find({}, function (err, products) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send(products);
-    });
+// Create new Product
+const createProduct = async (req, res) => {
+    const newProduct = new Product(req.body);
+
+    try {
+        const savedProduct = await newProduct.save();
+        res.status(200).json(savedProduct);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
-
-// Display detail page for a specific Product.
-exports.product_detail = function (req, res) {
-    let id = req.params.id;
-    Product.findById(id, function (err, product) {
-        if (err) return res.status(500).send(err);
-        if (!product) return res.status(404).send("No product found.");
-        res.status(200).send(product);
-    });
+// Update Product
+const updateProduct = async (req, res) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
+        res.status(200).json(updatedProduct);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
-// Handle Product create on POST.
-exports.product_create = function (req, res) {
-    Product.create(req.body, function (err, product) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send(product);
-    });
+// Delete Product
+const deleteProduct = async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.status(200).json("Product has been deleted...");
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
-// Handle Product delete on DELETE.
-exports.product_delete = function (req, res) {
-    let id = req.params.id;
-    Product.findByIdAndRemove(id, function (err) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send("Product deleted successfully.");
-    });
+// Get Product by id
+const getProductById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        res.status(200).json(product);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
-// Handle Product update on PUT.
-exports.product_update = function (req, res) {
-    let id = req.params.id;
-    Product.findByIdAndUpdate(id, req.body, { new: true }, function (err, product) {
-        if (err) return res.status(500).send(err);
-        if (!product) return res.status(404).send("No product found.");
-        res.status(200).send(product);
-    });
+// Get All Products
+const getAllProducts = async (req, res) => {
+    const qNew = req.query.new;
+    const qCategory = req.query.category;
+    try {
+        let products;
+        if (qNew) {
+            products = await Product.find().sort({ createdAt: -1 }).limit(1);
+        } else if (qCategory) {
+            products = await Product.find({
+                categories: { $in: [qCategory] },
+            });
+        } else {
+            products = await Product.find();
+        }
+        res.status(200).json(products);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+module.exports = {
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    getProductById,
+    getAllProducts,
 };

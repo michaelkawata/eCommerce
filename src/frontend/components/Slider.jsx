@@ -3,6 +3,10 @@ import React from "react";
 import { ArrowBackIosNewOutlined, ArrowForwardIosOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { sliderItems } from "../data";
+// import { mobile } from "../responsive"
+import { tabletSmall } from "../responsive"
+import { tablet } from "../responsive"
+
 
 
 
@@ -12,6 +16,8 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  ${tabletSmall({ display: "none"})}
+
 `
 
 const Arrow = styled.div`
@@ -50,15 +56,18 @@ const Slide = styled.div`
   display: flex;
   align-items: center;
   background-color: #${props=>props.bg}
+
 `
 
 const ImgContainer = styled.div`
   flex: 1;
   height: 100%;
+  ${tablet({ display: "flex", alignItems: "center" })}
 `
 
 const Image = styled.img`
   height: 80%;
+  ${tablet({ height: "60%"})}
 `
 
 const InfoContainer = styled.div`

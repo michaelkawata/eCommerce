@@ -1,53 +1,67 @@
-const User = require('../models/User');
+const User = require("../models/User")
+const CryptoJS = require("crypto-js")
 
-// Handle User create on POST.
-exports.user_register = function(req, res) {
-    User.create(req.body, function(err, user) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send(user);
-    });
-};
+// Update User
+const updateUser = async (req, res) => {
+  if (req.body.password) {
+    req.body.password = CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.PASS_SEC
+    ).toString()
+  }
 
-// Handle User login on POST.
-exports.user_login = function(req, res) {
-    User.findOne({ email: req.body.email }, function(err, user) {
-        if (err) return res.status(500).send(err);
-        if (!user) return res.status(404).send("No user found.");
-        
-        // use hash passwords in production Not done yet MB
-        if (user.password === req.body.password) {
-            res.status(200).send(user);
-        } else {
-            res.status(401).send("Password is incorrect.");
-        }
-    });
-};
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, {
+      new: true
+    })
+    res.status(200).json(updatedUser)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
-// Display detail page for a specific User.
-exports.user_detail = function(req, res) {
-    let id = req.params.id;
-    User.findById(id, function(err, user) {
-        if (err) return res.status(500).send(err);
-        if (!user) return res.status(404).send("No user found.");
-        res.status(200).send(user);
-    });
-};
+// Delete User
+const deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id)
+    res.status(200).json("User has been deleted...")
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
-// Handle User delete on DELETE.
-exports.user_delete = function(req, res) {
-    let id = req.params.id;
-    User.findByIdAndRemove(id, function(err) {
-        if (err) return res.status(500).send(err);
-        res.status(200).send("User deleted successfully.");
-    });
-};
+// Find User by ID
+const findUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    const {
+      password,
+      ...others
+    } = user._doc;
 
-// Handle User update on PUT.
-exports.user_update = function(req, res) {
-    let id = req.params.id;
-    User.findByIdAndUpdate(id, req.body, {new: true}, function(err, user) {
-        if (err) return res.status(500).send(err);
-        if (!user) return res.status(404).send("No user found.");
-        res.status(200).send(user);
-    });
-};
+    res.status(200).json(others)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+// Get All Users
+const getAllUsers = async (req, res) => {
+  const query = req.query.new
+  try {
+    const users = query ? await User.find().sort({_id: -1}).limit(5) : await User.find()
+    res.status(200).json(users)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+
+module.exports = {
+  updateUser,
+  deleteUser,
+  findUser,
+  getAllUsers
+}
