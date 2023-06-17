@@ -3,7 +3,7 @@ const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin
-} = require("./verifyToken");  // Importing middleware for verifying JWT tokens and permissions
+} = require("../controllers/tokenController");  // Importing middleware for verifying JWT tokens and permissions
 
 // Importing the cart controller
 const cartController = require("../controllers/cartController");

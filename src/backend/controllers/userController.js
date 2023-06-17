@@ -61,10 +61,48 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+// Register a new user
+const registerUser = async (req, res) => {
+  // Extract the user data from the request body
+  const { username, password, email } = req.body;
+
+  try {
+    // Check if a user with the same username or email already exists
+    const existingUser = await User.findOne({
+      $or: [{ username: username }, { email: email }],
+    });
+
+    if (existingUser) {
+      return res.status(409).json({ message: "Username or email already exists" });
+    }
+
+    // Encrypt the password using the secret key
+    const encryptedPassword = CryptoJS.AES.encrypt(password, process.env.PASS_SEC).toString();
+
+    // Create a new user object
+    const newUser = new User({
+      username: username,
+      password: encryptedPassword,
+      email: email,
+    });
+
+    // Save the user to the database
+    const savedUser = await newUser.save();
+
+    // Remove the password field from the response
+    const { password, ...others } = savedUser._doc;
+
+    res.status(201).json(others);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 
 module.exports = {
   updateUser,
   deleteUser,
   findUser,
-  getAllUsers
+  getAllUsers,
+  registerUser
 }

@@ -3,21 +3,21 @@ const userController = require("../controllers/userController");
 const {
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin
-} = require("./verifyToken")
+} = require("../controllers/tokenController");
 
 // Update User
-router.put("/:id", verifyTokenAndAuthorization, userController.updateUser)
+router.put("/:id", verifyTokenAndAuthorization, userController.updateUser);
 
 // Delete User
-router.delete("/:id", verifyTokenAndAuthorization, userController.deleteUser)
+router.delete("/:id", verifyTokenAndAuthorization, userController.deleteUser);
 
 // Get User
-router.get("/find/:id", verifyTokenAndAdmin, userController.findUser)
+router.get("/find/:id", verifyTokenAndAdmin, userController.findUser);
 
 // Get All Users
-router.get("/", verifyTokenAndAdmin, userController.getAllUsers)
+router.get("/", verifyTokenAndAdmin, userController.getAllUsers);
 
-// Get User Stats
-router.get("/stats", verifyTokenAndAdmin, userController.getUserStats)
+// Register User
+router.post("/register", userController.registerUser);
 
-module.exports = router
+module.exports = router;

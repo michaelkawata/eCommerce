@@ -1,63 +1,41 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
+require('dotenv').config()
+const express = require("express");
 const app = express();
-const Product = require('./models/Product'); // Assuming you have a Product model
-const User = require('./models/User'); // Assuming you have a User model
+const mongoose = require("mongoose");
+const userRoute = require("./routes/users");
+const authRoute = require("./routes/auth");
+const productRoute = require("./routes/products");
+const cartRoute = require("./routes/cart");
+const cors = require("cors");
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
-console.log('PORT --------------------', PORT);
-const authController = require('./controllers/authController');
+const path = require('path')
+
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://chriseun:Soccer99!@cluster0.mxjdtil.mongodb.net/Cluster0?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('MongoDB connected')
-}).catch((err) => console.log('Could not connect to MongoDB', err))
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("DB Connection Successfull!"))
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.use(cors());
+app.use(express.json());
+app.use("/auth", authRoute);
+app.use("/users", userRoute);
+app.use("/products", productRoute);
+app.use("/carts", cartRoute);
+
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true })); // new code from stackoverflow
+app.use(express.json()); // new code from stackoverflow
 
-// Get all products
-app.get('/products', async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', '..', 'dist', "index.html"));
 });
 
-// Get specific product
-app.get('/products/:id', async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ message: 'Product not found.' });
-  }
-});
-
-// Register new user
-app.post('/register', async (req, res) => {
-  const newUser = new User({
-    email: req.body.email,
-    password: req.body.password, // in a real-world scenario you should hash the password
-  });
-  const savedUser = await newUser.save();
-  res.status(201).json(savedUser);
-});
-
-// User login
-app.post('/login', async (req, res) => {
-  console.log('server login req res', req.body);
-  // authController.login(req, res);
-  const user = await User.findOne({ username: req.body.username, password: req.body.password });
-  console.log('server post login', user);
-  if (user) {
-    res.json({ message: 'Login successful!' });
-  } else {
-    res.status(401).json({ message: 'Invalid email or password.' });
-  }
-});
 
 // Start server
 app.listen(PORT, () => {
