@@ -1,58 +1,43 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors');
+require('dotenv').config()
+const express = require("express");
 const app = express();
-const fs = require('fs');
+const mongoose = require("mongoose");
+const userRoute = require("./routes/users");
+const authRoute = require("./routes/auth");
+const productRoute = require("./routes/products");
+const cartRoute = require("./routes/cart");
+const cors = require("cors");
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
+const path = require('path')
 
-// Read JSON data file
-let data = JSON.parse(fs.readFileSync(path.join(__dirname, './db.json'), 'utf8'));
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
-// Apply middleware
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("DB Connection Successfull!"))
+  .catch((err) => {
+    console.log(err);
+  });
+
 app.use(cors());
+app.use(express.json());
+app.use("/auth", authRoute);
+app.use("/users", userRoute);
+app.use("/products", productRoute);
+app.use("/carts", cartRoute);
+
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true })); // new code from stackoverflow
+app.use(express.json()); // new code from stackoverflow
 
-// Get all products
-app.get('/products', (req, res) => {
-    res.json(data.products);
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', '..', 'dist', "index.html"));
 });
 
-// Get specific product
-app.get('/products/:id', (req, res) => {
-    const product = data.products.find(p => p.id === parseInt(req.params.id));
-    if (product) {
-        res.json(product);
-    } else {
-        res.status(404).json({message: 'Product not found.'});
-    }
-});
-
-// Register new user
-app.post('/register', (req, res) => {
-
-    const newUser = {
-        id: data.users.length + 1, 
-        email: req.body.email,
-        password: req.body.password, 
-    };
-    data.users.push(newUser);
-    fs.writeFileSync(path.join(__dirname, './db.json'), JSON.stringify(data)); 
-    res.status(201).json(newUser);
-});
-
-// User login
-app.post('/login', (req, res) => {
- 
-    const user = data.users.find(u => u.email === req.body.email && u.password === req.body.password);
-    if (user) {
-        res.json({message: 'Login successful!'}); 
-    } else {
-        res.status(401).json({message: 'Invalid email or password.'});
-    }
-});
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

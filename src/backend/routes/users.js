@@ -1,20 +1,23 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/userController');
+const router = require("express").Router();
+const userController = require("../controllers/userController");
+const {
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin
+} = require("../controllers/tokenController");
 
-// POST request for registering a user.
-router.post('/register', userController.user_register);
+// Update User
+router.put("/:id", verifyTokenAndAuthorization, userController.updateUser);
 
-// POST request for user login.
-router.post('/login', userController.user_login);
+// Delete User
+router.delete("/:id", verifyTokenAndAuthorization, userController.deleteUser);
 
-// GET request for one user.
-router.get('/:id', userController.user_detail);
+// Get User
+router.get("/find/:id", verifyTokenAndAdmin, userController.findUser);
 
-// PUT request to update a user.
-router.put('/:id', userController.user_update);
+// Get All Users
+router.get("/", verifyTokenAndAdmin, userController.getAllUsers);
 
-// DELETE request to delete a user.
-router.delete('/:id', userController.user_delete);
+// Register User
+router.post("/register", userController.registerUser);
 
 module.exports = router;

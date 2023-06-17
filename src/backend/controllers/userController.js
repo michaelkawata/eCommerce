@@ -1,67 +1,108 @@
-const db = require('../models')
-const users = require('express').Router()
-const { User, Product } = db
+const User = require("../models/User")
+const CryptoJS = require("crypto-js")
 
-// FIND A SPECIFIC Users
-users.get('/:id', async (req, res) => {
-    try {
-        const foundUser = await User.findOne({
-            where: { id: req.params.id },
-        })
-        const products = await Product.findAll({
-            where: { userId: req.params.id }
-        })
-        res.status(200).json({ user: foundUser, products })
-    } catch (error) {
-        res.status(500).json(error)
+// Update User
+const updateUser = async (req, res) => {
+  if (req.body.password) {
+    req.body.password = CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.PASS_SEC
+    ).toString()
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, {
+      new: true
+    })
+    res.status(200).json(updatedUser)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+// Delete User
+const deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id)
+    res.status(200).json("User has been deleted...")
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+// Find User by ID
+const findUser = async (req, res) => {
+  console.log('findUser', req, res);
+  try {
+    const user = await User.findById(req.params.id)
+    console.log('findUser', user);
+    const {
+      password,
+      ...others
+    } = user._doc;
+
+    res.status(200).json(others)
+  } catch (err) {
+    console.log('findUser = error', err);
+    res.status(500).json(err)
+  }
+}
+
+// Get All Users
+const getAllUsers = async (req, res) => {
+  const query = req.query.new
+  try {
+    const users = query ? await User.find().sort({ _id: -1 }).limit(5) : await User.find()
+    res.status(200).json(users)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+// Register a new user
+const registerUser = async (req, res) => {
+  // Extract the user data from the request body
+  const { username, password, email } = req.body;
+
+  try {
+    // Check if a user with the same username or email already exists
+    const existingUser = await User.findOne({
+      $or: [{ username: username }, { email: email }],
+    });
+
+    if (existingUser) {
+      return res.status(409).json({ message: "Username or email already exists" });
     }
-})
 
-// CREATE AUsers
-users.product('/', async (req, res) => {
-    try {
-        console.log(req.body)
-        const newUser = await User.create(req.body)
-        res.status(201).json({
-            message: 'Successfully inserted a new User',
-            data: newUser
-        })
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+    // Encrypt the password using the secret key
+    const encryptedPassword = CryptoJS.AES.encrypt(password, process.env.PASS_SEC).toString();
 
-// UPDATE A Users
-users.put('/:id', async (req, res) => {
-    try {
-        const updatedUsers = await User.update(req.body, {
-            where: {
-                id: req.params.id
-            }
-        })
-        res.status(200).json({
-            message: `Successfully updated ${updatedUsers} product(s)`
-        })
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+    // Create a new user object
+    const newUser = new User({
+      username: username,
+      password: encryptedPassword,
+      email: email,
+    });
 
-// DELETE A Users
-users.delete('/:id', async (req, res) => {
-    try {
-        const deletedUsers = await User.destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        res.status(200).json({
-            message: `Successfully deleted ${deletedUsers} product(s)`
-        })
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+    // Save the user to the database
+    const savedUser = await newUser.save();
 
-// EXPORT
-module.exports = users
+    // Remove the password field from the response
+    const { password, ...others } = savedUser._doc;
+
+    res.status(201).json(others);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+module.exports = {
+  updateUser,
+  deleteUser,
+  findUser,
+  getAllUsers,
+  registerUser
+}
