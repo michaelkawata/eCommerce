@@ -3,7 +3,7 @@ const userController = require("../controllers/userController");
 const {
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin
-} = require("./verifyToken");
+} = require("../controllers/tokenController");
 
 // Update User
 router.put("/:id", verifyTokenAndAuthorization, userController.updateUser);
@@ -19,8 +19,5 @@ router.get("/", verifyTokenAndAdmin, userController.getAllUsers);
 
 // Register User
 router.post("/register", userController.registerUser);
-
-// Get User Stats
-router.get("/stats", verifyTokenAndAdmin, userController.getUserStats);
 
 module.exports = router;

@@ -67,12 +67,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/login", {
+      const res = await axios.post("/auth/login", {
         username: username,
         password: password,
       });
 
-      res.data && window.location.replace("/");
+      // res.data && window.location.replace("/");
     } catch (err) {
       console.log('Login error', err, err.response);
       setError(err.response ? err.response.data : err.message);
@@ -82,7 +82,7 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>SIGN IN</Title>
+        <Title>SIGN IN 2</Title>
         {error && <Error>{error.message || error}</Error>}
         <Form onSubmit={handleSubmit}>
           <Input

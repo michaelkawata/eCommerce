@@ -1,57 +1,71 @@
 const User = require("../models/User");
-const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt")
+
 
 // Register User
 const register = async (req, res) => {
-    const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: CryptoJS.AES.encrypt(
-            req.body.password,
-            process.env.PASS_SEC
-        ).toString(),
-    });
+    const { username, email, password } = req.body;
 
     try {
+        // Generate a salt and hash the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Create a new user with the hashed password
+        const newUser = new User({
+            username: username,
+            email: email,
+            password: hashedPassword,
+        });
+
+        // Save the user to the database
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
-    } catch (err) {
-        res.status(500).json(err);
+
+        // Clear the form fields
+        req.body.username = '';
+        req.body.email = '';
+        req.body.password = '';
+
+        // Redirect back to the home page
+        res.redirect('/');
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred while registering the user.' });
     }
 };
 
-// Login User
+// User login
 const login = async (req, res) => {
+    const { username, password } = req.body;
+
     try {
-        const user = await User.findOne({ username: req.body.username });
-        console.log('authController login ', req.body, user);
+        // Find the user by username
+        const user = await User.findOne({ username });
 
-        if (!user) return res.status(401).json("Wrong credentials!");
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid username or password.' });
+        }
 
-        const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SEC);
-        const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+        // Compare the inputted password with the hashed password
+        const passwordMatch = await bcrypt.compare(password, user.password);
 
-        console.log('original password', OriginalPassword);
+        if (passwordMatch) {
+            const accessToken = jwt.sign(
+                { id: user._id, isAdmin: user.isAdmin },
+                process.env.JWT_SEC,
+                { expiresIn: "3d" }
+            );
 
-        if (OriginalPassword !== req.body.password) return res.status(401).json("Wrong credentials!");
-
-        const accessToken = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin },
-            process.env.JWT_SEC,
-            { expiresIn: "3d" }
-        );
-
-        console.log('accessToken', accessToken);
-
-        const { password, ...others } = user._doc;
-        res.status(200).json({ ...others, accessToken });
-    } catch (err) {
-        console.log('authController login error', err);
-        res.status(500).json(err);
-
+            res.status(200).json({ token: accessToken });
+        } else {
+            res.status(401).json({ message: 'Invalid username or password.' });
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'An error occurred while logging in.' });
     }
-}
+};
 
 module.exports = {
     register,
