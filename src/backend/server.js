@@ -6,8 +6,8 @@ const app = express();
 const Product = require('./models/Product'); // Assuming you have a Product model
 const User = require('./models/User'); // Assuming you have a User model
 const PORT = process.env.PORT || 5000;
+const bcrypt = require('bcrypt');
 console.log('PORT --------------------', PORT);
-const authController = require('./controllers/authController');
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://chriseun:Soccer99!@cluster0.mxjdtil.mongodb.net/Cluster0?retryWrites=true&w=majority', {
@@ -19,6 +19,8 @@ mongoose.connect('mongodb+srv://chriseun:Soccer99!@cluster0.mxjdtil.mongodb.net/
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true })); // new code from stackoverflow
+app.use(express.json()); // new code from stackoverflow
 
 // Get all products
 app.get('/products', async (req, res) => {
@@ -38,26 +40,62 @@ app.get('/products/:id', async (req, res) => {
 
 // Register new user
 app.post('/register', async (req, res) => {
-  const newUser = new User({
-    email: req.body.email,
-    password: req.body.password, // in a real-world scenario you should hash the password
-  });
-  const savedUser = await newUser.save();
-  res.status(201).json(savedUser);
+  const { username, email, password } = req.body;
+
+  try {
+    // Generate a salt and hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create a new user with the hashed password
+    const newUser = new User({
+      username: username,
+      email: email,
+      password: hashedPassword,
+    });
+
+    // Save the user to the database
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
+
+    // Clear the form fields
+    req.body.username = '';
+    req.body.email = '';
+    req.body.password = '';
+
+    // Redirect back to the home page
+    res.redirect('/');
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while registering the user.' });
+  }
 });
+
 
 // User login
 app.post('/login', async (req, res) => {
-  console.log('server login req res', req.body);
-  // authController.login(req, res);
-  const user = await User.findOne({ username: req.body.username, password: req.body.password });
-  console.log('server post login', user);
-  if (user) {
-    res.json({ message: 'Login successful!' });
-  } else {
-    res.status(401).json({ message: 'Invalid email or password.' });
+  const { username, password } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid username or password.' });
+    }
+
+    // Compare the inputted password with the hashed password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      res.json({ message: 'Login successful!' });
+    } else {
+      res.status(401).json({ message: 'Invalid username or password.' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while logging in.' });
   }
 });
+
 
 // Start server
 app.listen(PORT, () => {

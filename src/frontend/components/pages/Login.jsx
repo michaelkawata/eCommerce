@@ -75,7 +75,7 @@ const Login = () => {
       res.data && window.location.replace("/");
     } catch (err) {
       console.log('Login error', err, err.response);
-      setError(err.response.data);
+      setError(err.response ? err.response.data : err.message);
     }
   };
 
@@ -83,7 +83,7 @@ const Login = () => {
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
-        {/* {error && <Error>{error}</Error>} */}
+        {error && <Error>{error.message || error}</Error>}
         <Form onSubmit={handleSubmit}>
           <Input
             placeholder="Username"

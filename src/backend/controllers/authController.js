@@ -26,14 +26,15 @@ const login = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username });
         console.log('authController login ', req.body, user);
-        !user && res.status(401).json("Wrong credentials!");
+
+        if (!user) return res.status(401).json("Wrong credentials!");
 
         const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SEC);
         const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
         console.log('original password', OriginalPassword);
 
-        OriginalPassword !== req.body.password && res.status(401).json("Wrong credentials!");
+        if (OriginalPassword !== req.body.password) return res.status(401).json("Wrong credentials!");
 
         const accessToken = jwt.sign(
             { id: user._id, isAdmin: user.isAdmin },
