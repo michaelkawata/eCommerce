@@ -5,7 +5,7 @@ import { mobileSmall } from "../responsive"
 
 const Container = styled.div`
   height: 30px;
-  background-color: teal;
+  background-color: #000;
   color: white;
   display: flex;
   justify-content: center;

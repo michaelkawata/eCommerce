@@ -39,15 +39,15 @@ const Title = styled.div`
 const Button = styled.button`
   border: none;
   padding: 10px;
-  background-color: #fff;
-  color: grey;
+  background-color: gold;
+  color: #000;
   cursor: pointer;
   font-weight: 600;
       &:hover {
-    background-color: teal;
+    background-color: #fff;
     transition: ease-in-out 0.6s;
 
-    color: #fff;
+    color: #000;
     border-color: #fff;
   }
 `

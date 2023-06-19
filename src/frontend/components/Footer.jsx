@@ -7,6 +7,8 @@ import { mobile } from "../responsive"
 import { mobileLarge } from "../responsive"
 import { tabletSmall } from "../responsive"
 
+import { Link } from "react-router-dom";
+
 
 const Container = styled.div`
   display: flex;
@@ -19,7 +21,7 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  ${mobileLarge({ backgroundColor: "teal", color: "#fff"})}
+  ${mobileLarge({ backgroundColor: "#000", color: "#fff"})}
 `
 
 const Logo = styled.h1`
@@ -98,7 +100,7 @@ const Footer = ({item}) => {
           <Logo>MCM</Logo>
           <Description>where style meets comfort,
             offers a wide range of trendy and high-quality clothing for men and women,
-            perfect for every occasion with Marlons
+            perfect for every occasion with MCM
           </Description>
           <SocialContainer>
             <SocialIcon color="3B5999">
@@ -120,15 +122,15 @@ const Footer = ({item}) => {
             Useful Links
           </Title>
           <List>
-            <ListItem>Home</ListItem>
-            <ListItem>Cart</ListItem>
-            <ListItem>Men Fashion</ListItem>
-            <ListItem>Women Fashion</ListItem>
-            <ListItem>Accessories</ListItem>
-            <ListItem>My Account</ListItem>
-            <ListItem>Order Tracking</ListItem>
-            <ListItem>Wishlist</ListItem>
-            <ListItem>Terms</ListItem>
+            <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Home</Link></ListItem>
+            <ListItem><Link to="/cart" style={{ textDecoration: 'none' }}>Cart</Link></ListItem>
+            <ListItem><Link to="/products/men" style={{ textDecoration: 'none' }}>Men Fashion</Link></ListItem>
+            <ListItem><Link to="/products/women" style={{ textDecoration: 'none' }}>Women Fashion</Link></ListItem>
+            <ListItem><Link to="/products/jeans" style={{ textDecoration: 'none' }}>Jeans</Link></ListItem>
+            <ListItem><Link to="/login" style={{ textDecoration: 'none' }}>My Account</Link></ListItem>
+            <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Order Tracking</Link></ListItem>
+            <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Wishlist</Link></ListItem>
+            <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Terms</Link></ListItem>
           </List>
         </Center>
         <Right>
@@ -147,10 +149,10 @@ const Footer = ({item}) => {
             <MailOutline style={{marginRight: "10px"}} />
             contactandshop@mcm.dev
           </ContactItem>
-        <Payment src={require("../assets/images/card-page.jpg")} />
-      </Right>
+          <Payment src={require("../assets/images/card-page.jpg")} />
+        </Right>
 
-    </Container>
+      </Container>
   );
 }
 

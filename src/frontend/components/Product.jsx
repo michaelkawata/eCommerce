@@ -10,6 +10,8 @@ import { mobileLarge } from "../responsive"
 import { tablet } from "../responsive"
 import { screenLarge } from "../responsive"
 
+import { Link } from "react-router-dom";
+
 
 
 
@@ -42,7 +44,7 @@ const Container = styled.div`
 
   align-items: center;
   justify-content: center;
-  background-color: #f5fbfd;
+  background-color: #fff;
   position: relative;
   border-radius: 3px;
   ${mobileSmall({ width: "50px", height: "100px"  })}
@@ -88,11 +90,13 @@ const Icon = styled.div`
   ${mobileSmall({ width: "50px", height: "50px" })}
 
   &:hover{
-    background-color: #e9f5f5;
+    background-color: gold;
     transform: scale(1.1);
 
   }
 `
+
+
 
 const Product = ({item}) => {
   return (
@@ -104,7 +108,10 @@ const Product = ({item}) => {
             <ShoppingCartOutlinedIcon />
           </Icon>
           <Icon>
+            {/* linking to specific product */}
+            <Link to={`/product/${item._id}`}>
             <SearchOutlinedIcon />
+            </Link>
           </Icon>
           <Icon>
             <FavoriteBorderOutlined />

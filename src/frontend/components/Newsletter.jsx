@@ -8,7 +8,8 @@ import { tabletSmall } from "../responsive"
 
 const Container = styled.div`
   height: 60vh;
-  background-color: #fcf5f5;
+  background-color: #000;
+  color: gold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,9 +53,9 @@ const Input = styled.input`
 
 const Button = styled.button`
   flex: 1;
-  border: none;
-  background-color: teal;
-  color: #fff;
+  border: 1px solid #000;
+  background-color: gold;
+  color: #000;
   cursor: pointer;
 `
 

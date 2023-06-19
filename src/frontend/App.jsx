@@ -5,7 +5,6 @@ import Register from "./components/pages/Register";
 import Login from "./components/pages/Login";
 import Cart from "./components/pages/Cart";
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Navigate
@@ -14,7 +13,7 @@ import {
 const App = () => {
   const user = true
   return (
-   <Router>
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:category" element={<ProductList />} />
@@ -26,7 +25,7 @@ const App = () => {
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
-    </Router>
+    </div>
     )
 }
 
