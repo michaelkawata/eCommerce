@@ -1,29 +1,73 @@
-const router = require("express").Router();  // Importing Express router for creating route handlers
+const Cart = require("../models/Cart")
 const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin
-} = require("../controllers/tokenController");  // Importing middleware for verifying JWT tokens and permissions
+} = require("./verifyToken")
 
-// Importing the cart controller
-const cartController = require("../controllers/cartController");
+const router = require("express").Router();
 
-// Route for creating a new cart. Only accessible if the user is authenticated (verified by the token)
-router.post("/", verifyToken, cartController.createCart);
+//Create
 
-// Route for updating an existing cart. Accessible only by the cart owner or an admin
-router.put("/:id", verifyTokenAndAuthorization, cartController.updateCart);
+router.post("/", verifyToken, async (req, res) => {
+  const newCart = new Cart(req.body)
 
-// Route for deleting an existing cart. Accessible only by the cart owner or an admin
-router.delete("/:id", verifyTokenAndAuthorization, cartController.deleteCart);
+  try {
+    const savedCart = await newCart.save();
+    res.status(200).json(savedCart)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
 
-// Route for getting a specific user's cart. Accessible only by the cart owner or an admin
-router.get("/find/:userId", cartController.getUserCart);
-// router.get("/find/:userId", verifyTokenAndAuthorization, cartController.getUserCart);
+// Update Cart
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 
-// Route for getting all carts. Only accessible by an admin
-router.get("/", cartController.getAllCarts);
-// router.get("/", verifyTokenAndAdmin, cartController.getAllCarts);
+  try {
+    const updatedCart = await Cart.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, {
+      new: true
+    })
+    res.status(200).json(updatedCart)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+//Delete Cart
+router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    await Cart.findByIdAndDelete(req.params.id)
+    res.status(200).json("Cart has been deleted...")
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+//Get User Cart
+
+router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    //findOne cart because every user has only one cart
+    const cart = await Cart.findOne({userId: req.params.userId})
+    res.status(200).json(cart)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+//Get All
+//Only admin can see cart of all users
+router.get("/", verifyTokenAndAdmin, async (req, res) =>{
+  try{
+    const carts = await Cart.find()
+    res.status(200).json(carts)
+  }catch(err){
+    res.status(500). json(err)
+  }
+})
 
 
-module.exports = router;
+
+module.exports = router
