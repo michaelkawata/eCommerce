@@ -1,27 +1,32 @@
+// Import Order model
 const Order = require("../models/Order")
+
+// Import the verification functions
 const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin
 } = require("./verifyToken")
 
+// Create express router instance
 const router = require("express").Router();
 
-//CREATE
-
+// CREATE Order Endpoint
+// This will create a new order
+// Only accessible to Admin
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
-  const newOrder = new Order(req.body)
+  const newOrder = new Order(req.body) // Create new order using the body of the request
 
   try {
-    const savedOrder = await newOrder.save();
-    res.status(200).json(savedOrder)
+    const savedOrder = await newOrder.save(); // Save the order to the database
+    res.status(200).json(savedOrder) // Respond with the saved order
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err) // Respond with any errors
   }
 })
 
-// Update Order
-//Only Admin can update order
+// UPDATE Order Endpoint
+// Only Admin can update an order
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {
@@ -29,51 +34,51 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
     }, {
       new: true
     })
-    res.status(200).json(updatedOrder)
+    res.status(200).json(updatedOrder) // Respond with the updated order
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err) // Respond with any errors
   }
 })
 
-//Delete Order
+// DELETE Order Endpoint
+// Only Admin can delete an order
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    await Order.findByIdAndDelete(req.params.id)
-    res.status(200).json("Order has been deleted...")
+    await Order.findByIdAndDelete(req.params.id) // Delete the order by its ID
+    res.status(200).json("Order has been deleted...") // Confirm deletion
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err) // Respond with any errors
   }
 })
 
-//Get User Orders
-
+// GET User Orders Endpoint
+// Retrieve orders based on user ID
 router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    //users can have more than one orders
+    // Users can have more than one orders
     const orders = await Order.find({
       userId: req.params.userId
     })
-    res.status(200).json(orders)
+    res.status(200).json(orders) // Respond with the found orders
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err) // Respond with any errors
   }
 })
 
-//Get All Orders
-
+// GET All Orders Endpoint
+// Only accessible by Admin
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const orders = await Order.find()
-    res.status(200).json(orders)
+    const orders = await Order.find() // Retrieve all orders from the database
+    res.status(200).json(orders) // Respond with all orders
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err) // Respond with any errors
   }
 })
 
-
-/////advanced stuff///////////////////////////////////
-//Get Monthly Income
-
+// GET Income Endpoint
+// Only accessible by Admin
+// Aggregates the income of the last two months
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
   const date = new Date();
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1))
@@ -81,26 +86,25 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
 
   try {
     const income = await Order.aggregate([
-      { $match: {
+      { $match: { // Match orders that are paid and created within the last two months
         createdAt: {
           $gte: previousMonth}}},
     {
-      $project: {
+      $project: { // Project the month and the amount of the order
       month: {$month: "$createdAt"},
       sales: "$amount",
     },
-      $group:{
+      $group:{ // Group the orders by month and sum the total amount
         _id: "$month",
-        total:{$sum: "$sales"},
+        total:{$sum: "$sales"}, 
       }
     }
   ])
-    res.status(200).json(income)
+    res.status(200).json(income) // Respond with the aggregated income
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err) // Respond with any errors
   }
 
 })
-
 
 module.exports = router

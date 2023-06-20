@@ -13,8 +13,6 @@ import { screenLarge } from "../responsive"
 import { Link } from "react-router-dom";
 
 
-
-
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -47,25 +45,15 @@ const Container = styled.div`
   background-color: #fff;
   position: relative;
   border-radius: 3px;
-  ${mobileSmall({ width: "50px", height: "100px"  })}
-  ${mobile({ minWidth: "250px", height: "250px" })}
-  ${screenLarge({ minWidth: "20%"})}
+  ${mobileSmall({ width: "50px", height: "100px"  })} // Responsive style for small mobile devices
+  ${mobile({ minWidth: "250px", height: "250px" })} // Responsive style for mobile devices
+  ${screenLarge({ minWidth: "20%"})} // Responsive style for large screens
 
 
   &:hover ${Info}{
     opacity: 1;
   }
 `
-
-// const Circle = styled.div`
-//   width: 200px;
-//   height: 200px;
-//   border-radius: 50%;
-//   background-color: #fff;
-//   position: absolute;
-// `
-
-
 
 const Image = styled.img`
   height: 80%;
@@ -95,8 +83,6 @@ const Icon = styled.div`
 
   }
 `
-
-
 
 const Product = ({item}) => {
   return (
