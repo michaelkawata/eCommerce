@@ -1,108 +1,60 @@
 const User = require("../models/User")
-const CryptoJS = require("crypto-js")
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-// Update User
-const updateUser = async (req, res) => {
-  if (req.body.password) {
-    req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.PASS_SEC
-    ).toString()
-  }
+const register = async (req, res) => {
+    const { username, email, password } = req.body;
 
-  try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
-      $set: req.body
-    }, {
-      new: true
-    })
-    res.status(200).json(updatedUser)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-}
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        
+        const newUser = new User({
+            username: username,
+            email: email,
+            password: hashedPassword,
+        });
 
-// Delete User
-const deleteUser = async (req, res) => {
-  try {
-    await User.findByIdAndDelete(req.params.id)
-    res.status(200).json("User has been deleted...")
-  } catch (err) {
-    res.status(500).json(err)
-  }
-}
-
-// Find User by ID
-const findUser = async (req, res) => {
-  console.log('findUser', req, res);
-  try {
-    const user = await User.findById(req.params.id)
-    console.log('findUser', user);
-    const {
-      password,
-      ...others
-    } = user._doc;
-
-    res.status(200).json(others)
-  } catch (err) {
-    console.log('findUser = error', err);
-    res.status(500).json(err)
-  }
-}
-
-// Get All Users
-const getAllUsers = async (req, res) => {
-  const query = req.query.new
-  try {
-    const users = query ? await User.find().sort({ _id: -1 }).limit(5) : await User.find()
-    res.status(200).json(users)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-}
-
-// Register a new user
-const registerUser = async (req, res) => {
-  // Extract the user data from the request body
-  const { username, password, email } = req.body;
-
-  try {
-    // Check if a user with the same username or email already exists
-    const existingUser = await User.findOne({
-      $or: [{ username: username }, { email: email }],
-    });
-
-    if (existingUser) {
-      return res.status(409).json({ message: "Username or email already exists" });
+        const savedUser = await newUser.save();
+        res.status(201).json(savedUser);
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred while registering the user.' });
     }
+}
 
-    // Encrypt the password using the secret key
-    const encryptedPassword = CryptoJS.AES.encrypt(password, process.env.PASS_SEC).toString();
+const login = async (req, res) => {
+    const { username, password } = req.body;
 
-    // Create a new user object
-    const newUser = new User({
-      username: username,
-      password: encryptedPassword,
-      email: email,
-    });
+    try {
+        const user = await User.findOne({ username });
 
-    // Save the user to the database
-    const savedUser = await newUser.save();
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid username or password.' });
+        }
 
-    // Remove the password field from the response
-    const { password, ...others } = savedUser._doc;
+        const passwordMatch = await bcrypt.compare(password, user.password);
 
-    res.status(201).json(others);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
+        if (passwordMatch) {
+            // Create JWT payload
+            const payload = {
+                id: user._id,
+            };
 
+            const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3d' });
+
+            res.json({
+                message: 'Login successful!',
+                accessToken: accessToken
+            });
+        } else {
+            res.status(401).json({ message: 'Invalid username or password.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred while logging in.' });
+    }
+}
 
 module.exports = {
-  updateUser,
-  deleteUser,
-  findUser,
-  getAllUsers,
-  registerUser
+    register,
+    login
 }
