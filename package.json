@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "node src/backend/server.js",
-    "build": "webpack && npm i",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch": "npm-watch",
