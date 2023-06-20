@@ -1,3 +1,4 @@
+import React from "react";
 import Product from "./pages/Product";
 import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
@@ -15,7 +16,7 @@ import { useSelector } from "react-redux";
 const App = () => {
   const user = useSelector((state) => state.user.currentUser)
   return (
-   <Router>
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:category" element={<ProductList />} />
@@ -28,7 +29,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>
-    )
+  )
 }
 
 export default App;

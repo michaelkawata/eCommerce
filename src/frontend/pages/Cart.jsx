@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 
 
-const KEY = process.env.REACT_APP_STRIPE
+const KEY = "sk_test_51NIrLxEkNg4eAb3UbCXGMDFseAup62r6SGcZCqL2qzbnCE8m00QgI9DVEGwevsw6eWHuTNIPzuCq6O3sjtRdOLMS009ejopbeV"
 
 const Container = styled.div`
 
@@ -75,11 +75,11 @@ const TopButtonTwo = styled.button`
     }
 `
 
-const TopTexts= styled.div`
+const TopTexts = styled.div`
 
 `
 
-const TopText= styled.span`
+const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
   margin: 0 10px;
@@ -144,7 +144,7 @@ const ProductColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: ${props=>props.color};
+  background-color: ${props => props.color};
 `
 
 const ProductSize = styled.span`
@@ -160,7 +160,7 @@ const ProductAmountContainer = styled.div`
 const ProductAmount = styled.div`
   font-size: 24px;
   margin: 5px;
-  ${mobile({ margin: "5px 15px"})}
+  ${mobile({ margin: "5px 15px" })}
 `
 
 const ProductPrice = styled.div`
@@ -190,7 +190,7 @@ const Summary = styled.div`
   border-radius: 5px;
   padding: 20px;
   height: 50vh;
-  ${mobileLarge({ width: "70vw", marginLeft: "-10px"})}
+  ${mobileLarge({ width: "70vw", marginLeft: "-10px" })}
 `
 
 const SummaryTitle = styled.h1`
@@ -236,58 +236,58 @@ const Button = styled.button`
 
 const Cart = () => {
   //retrieves the value of cart state from redux store and assign it to cart variable
-  const cart = useSelector(state=>state.cart)
+  const cart = useSelector(state => state.cart)
   const [stripeToken, setStripeToken] = useState(null)
 
-  const onToken = (token) =>{
+  const onToken = (token) => {
     setStripeToken(token)
   }
   console.log(stripeToken)
   return (
-      <Container>
-        <Navbar />
-        <Announcement />
-        <Wrapper>
-          <Title>
-            YOUR CART
-          </Title>
-          <Top>
-            <Link to="/">
+    <Container>
+      <Navbar />
+      <Announcement />
+      <Wrapper>
+        <Title>
+          YOUR CART
+        </Title>
+        <Top>
+          <Link to="/">
             <TopButtonTwo>
               CONTINUE SHOPPING
             </TopButtonTwo>
-            </Link>
-            <TopTexts>
-              <TopText>Shopping Bag(2)</TopText>
-              <TopText>Your Wishlist (0)</TopText>
-            </TopTexts>
-            <TopButton type="filled">
-              {/* https://www.npmjs.com/package/react-stripe-checkout - react stripe checkout */}
-              <StripeCheckout
-                name="MCM"
-                image="https://ecommercemcm.s3.us-west-1.amazonaws.com/just+shirts/marbaker.swe_japanese_desiner_shirt_hip_hop_fashion_1066938d-eef0-4c40-b858-59c1c8691176+copy1.png"
-                billingAddress
-                shippingAddress
-                description={`Your total is $${cart.total}`}
-                //numbers are calculated in cents
-                amount={cart.total * 100}
-                token={onToken}
-                stripeKey={KEY}
-                >
-                <Button>CHECKOUT NOW
-                </Button>
-              </StripeCheckout>
-            </TopButton>
+          </Link>
+          <TopTexts>
+            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Your Wishlist (0)</TopText>
+          </TopTexts>
+          <TopButton type="filled">
+            {/* https://www.npmjs.com/package/react-stripe-checkout - react stripe checkout */}
+            <StripeCheckout
+              name="MCM"
+              image="https://ecommercemcm.s3.us-west-1.amazonaws.com/just+shirts/marbaker.swe_japanese_desiner_shirt_hip_hop_fashion_1066938d-eef0-4c40-b858-59c1c8691176+copy1.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.total}`}
+              //numbers are calculated in cents
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW
+              </Button>
+            </StripeCheckout>
+          </TopButton>
 
-          </Top>
-          <Bottom>
-            <Info>
-                <Hr />
+        </Top>
+        <Bottom>
+          <Info>
+            <Hr />
 
-              {cart.products.map(product=>(
+            {cart.products.map(product => (
               <Product>
                 <ProductDetails>
-                  <Image src={product.img}/>
+                  <Image src={product.img} />
                   <Details>
                     <ProductName>
                       <b>Product: </b> {product.title}
@@ -295,78 +295,78 @@ const Cart = () => {
                     <ProductId>
                       <b>ID: </b> {product._id}
                     </ProductId>
-                    <ProductColor color={product.color}/>
+                    <ProductColor color={product.color} />
                     <ProductSize>
                       <b>Size: </b> {product.size}
                     </ProductSize>
                   </Details>
                 </ProductDetails>
                 <PriceDetails>
-                    <ProductAmountContainer>
-                      <Add />
-                        <ProductAmount>
-                          {product.quantity}
-                        </ProductAmount>
-                      <Remove />
-                    </ProductAmountContainer>
-                    <ProductPrice>
-                      <MoneySymbol>$</MoneySymbol>
-                       {product.price * product.quantity}
-                    </ProductPrice>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>
+                      {product.quantity}
+                    </ProductAmount>
+                    <Remove />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    <MoneySymbol>$</MoneySymbol>
+                    {product.price * product.quantity}
+                  </ProductPrice>
                 </PriceDetails>
               </Product>
-              ))}
+            ))}
 
-                <Hr />
+            <Hr />
 
 
-            </Info>
+          </Info>
 
-            <Summary>
-              <SummaryTitle>
-                ORDER SUMMARY
-              </SummaryTitle>
-              <SummaryItem>
-                <SummaryItemText>Subtotal: </SummaryItemText>
-                <SummaryItemPrice>${cart.total}</SummaryItemPrice>
-              </SummaryItem>
+          <Summary>
+            <SummaryTitle>
+              ORDER SUMMARY
+            </SummaryTitle>
+            <SummaryItem>
+              <SummaryItemText>Subtotal: </SummaryItemText>
+              <SummaryItemPrice>${cart.total}</SummaryItemPrice>
+            </SummaryItem>
 
-              <SummaryItem>
-                <SummaryItemText>Estimated Shipping: </SummaryItemText>
-                <SummaryItemPrice>$5.90</SummaryItemPrice>
-              </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Estimated Shipping: </SummaryItemText>
+              <SummaryItemPrice>$5.90</SummaryItemPrice>
+            </SummaryItem>
 
-              <SummaryItem>
-                <SummaryItemText>Shipping Discount: </SummaryItemText>
-                <SummaryItemPrice>$-5.90</SummaryItemPrice>
-              </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Shipping Discount: </SummaryItemText>
+              <SummaryItemPrice>$-5.90</SummaryItemPrice>
+            </SummaryItem>
 
-              <SummaryItem type="total">
-                <SummaryItemText>Total: </SummaryItemText>
-                <SummaryItemPrice>${cart.total}</SummaryItemPrice>
-              </SummaryItem>
+            <SummaryItem type="total">
+              <SummaryItemText>Total: </SummaryItemText>
+              <SummaryItemPrice>${cart.total}</SummaryItemPrice>
+            </SummaryItem>
 
-              {/* https://www.npmjs.com/package/react-stripe-checkout - react stripe checkout */}
-              <StripeCheckout
-                name="MCM"
-                image="https://ecommercemcm.s3.us-west-1.amazonaws.com/just+shirts/marbaker.swe_japanese_desiner_shirt_hip_hop_fashion_1066938d-eef0-4c40-b858-59c1c8691176+copy1.png"
-                billingAddress
-                shippingAddress
-                description={`Your total is $${cart.total}`}
-                //numbers are calculated in cents
-                amount={cart.total * 100}
-                token={onToken}
-                stripeKey={KEY}
-                >
-                <Button>CHECKOUT NOW
-                </Button>
-              </StripeCheckout>
+            {/* https://www.npmjs.com/package/react-stripe-checkout - react stripe checkout */}
+            <StripeCheckout
+              name="MCM"
+              image="https://ecommercemcm.s3.us-west-1.amazonaws.com/just+shirts/marbaker.swe_japanese_desiner_shirt_hip_hop_fashion_1066938d-eef0-4c40-b858-59c1c8691176+copy1.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.total}`}
+              //numbers are calculated in cents
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW
+              </Button>
+            </StripeCheckout>
 
-            </Summary>
-          </Bottom>
-        </Wrapper>
-        <Footer />
-      </Container>
+          </Summary>
+        </Bottom>
+      </Wrapper>
+      <Footer />
+    </Container>
   );
 }
 
