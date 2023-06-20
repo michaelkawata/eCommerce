@@ -15,69 +15,71 @@ const Container = styled.div`
   ${mobileSmall({ justifyContent: "center" })}
 `
 
-const Products = ({cat, filters, sort}) => {
+const Products = ({ cat, filters, sort }) => {
   // console.log(cat, filters, sort)
 
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
 
 
-  useEffect(() =>{
-    const getProducts = async () =>{
-      try{
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
         const res = await axios.get(
           //fetch from category, if not, fetch from all products
           cat ? `http://localhost:5000/api/products?category=${cat}`
-          : `http://localhost:5000/api/products`
-          )
+            : `http://localhost:5000/api/products`
+        )
         // console.log(res)
         setProducts(res.data)
-      }catch(err) {}
+      } catch (err) { }
     }
     getProducts()
   }, [cat])
 
 
-  useEffect(() =>{
+  useEffect(() => {
     cat &&
-    setFilteredProducts(
-      products.filter(item =>
-        Object.entries(filters).every(([key, value]) =>
-          item[key].includes(value)
-       )
+      setFilteredProducts(
+        products.filter(item =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
+        )
       )
-    )
     //filters are color, sizes, etc
   }, [products, cat, filters])
 
 
   //filtering from newest, to lowest price and highest price
   useEffect(() => {
-    if((sort === "newest")) {
-setFilteredProducts(prev =>
-    [...prev].sort((itemOne,itemTwo) => itemOne.createdAt - itemTwo.createdAt)
-  )
-} else if((sort === "lowest")) {
-setFilteredProducts(prev =>
-    [...prev].sort((itemOne,itemTwo) => itemOne.price - itemTwo.price)
-  )
-} else {
-setFilteredProducts(prev =>
-    [...prev].sort((itemOne,itemTwo) => itemTwo.price - itemOne.price)
-  )
-}
+    if ((sort === "newest")) {
+      setFilteredProducts(prev =>
+        [...prev].sort((itemOne, itemTwo) => itemOne.createdAt - itemTwo.createdAt)
+      )
+    } else if ((sort === "lowest")) {
+      setFilteredProducts(prev =>
+        [...prev].sort((itemOne, itemTwo) => itemOne.price - itemTwo.price)
+      )
+    } else {
+      setFilteredProducts(prev =>
+        [...prev].sort((itemOne, itemTwo) => itemTwo.price - itemOne.price)
+      )
+    }
   }, [sort])
+
+  console.log(products)
 
 
   return (
-      <Container>
-        {/* sorting how much items should be lined up at the main home page */}
-        {cat ? filteredProducts.map((item)=>(
-          <Product item={item} key={item.id}/>
-        )) : products
-              .slice(0,8)
-              .map((item)=><Product item={item} key={item.id}/>)}
-      </Container>
+    <Container>
+      {/* sorting how much items should be lined up at the main home page */}
+      {cat ? filteredProducts.map((item) => (
+        <Product item={item} key={item.id} />
+      )) : products
+        .slice(0, 8)
+        .map((item) => <Product item={item} key={item.id} />)}
+    </Container>
   );
 }
 
