@@ -1,27 +1,106 @@
-// Import required modules
-const router = require("express").Router();  // Express router for defining routes
+const Order = require("../models/Order")
 const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin
-} = require("./verifyToken");  // Middleware to check JWT token and user permissions
+} = require("./verifyToken")
 
-const orderController = require("../controllers/orderController");  // Controller methods for order related operations
+const router = require("express").Router();
 
-// Route for creating a new order
-router.post("/", verifyTokenAndAdmin, orderController.createOrder);
+//CREATE
 
-// Route for updating an existing order
-router.put("/:id", verifyTokenAndAdmin, orderController.updateOrder);
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
+  const newOrder = new Order(req.body)
 
-// Route for deleting an existing order
-router.delete("/:id", verifyTokenAndAdmin, orderController.deleteOrder);
+  try {
+    const savedOrder = await newOrder.save();
+    res.status(200).json(savedOrder)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
 
-// Route for getting orders of a specific user
-router.get("/find/:userId", verifyTokenAndAuthorization, orderController.getUserOrders);
+// Update Order
+//Only Admin can update order
+router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, {
+      new: true
+    })
+    res.status(200).json(updatedOrder)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
 
-// Route for getting all orders
-router.get("/", verifyTokenAndAdmin, orderController.getAllOrders);
+//Delete Order
+router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    await Order.findByIdAndDelete(req.params.id)
+    res.status(200).json("Order has been deleted...")
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
 
-// Exporting the router to be used in other parts of the application
-module.exports = router;
+//Get User Orders
+
+router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    //users can have more than one orders
+    const orders = await Order.find({
+      userId: req.params.userId
+    })
+    res.status(200).json(orders)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+//Get All Orders
+
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const orders = await Order.find()
+    res.status(200).json(orders)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+
+/////advanced stuff///////////////////////////////////
+//Get Monthly Income
+
+router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+  const date = new Date();
+  const lastMonth = new Date(date.setMonth(date.getMonth() - 1))
+  const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1))
+
+  try {
+    const income = await Order.aggregate([
+      { $match: {
+        createdAt: {
+          $gte: previousMonth}}},
+    {
+      $project: {
+      month: {$month: "$createdAt"},
+      sales: "$amount",
+    },
+      $group:{
+        _id: "$month",
+        total:{$sum: "$sales"},
+      }
+    }
+  ])
+    res.status(200).json(income)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+
+})
+
+
+module.exports = router

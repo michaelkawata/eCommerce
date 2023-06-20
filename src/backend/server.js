@@ -1,33 +1,38 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express")
 const app = express();
+const mongoose = require("mongoose")
+const dotenv = require("dotenv")
 
-const userRoutes = require('./routes/users');
+const userRoute = require("./routes/user")
+const authRoute = require("./routes/auth")
+const productRoute = require("./routes/product")
+const cartRoute = require("./routes/cart")
+const orderRoute = require("./routes/order")
+const stripeRoute = require("./routes/stripe")
 
-const PORT = process.env.PORT || 5000;
-const bcrypt = require('bcrypt');
-console.log('PORT --------------------', PORT);
-
-// MongoDB connection
-mongoose.connect('mongodb+srv://chriseun:Soccer99!@cluster0.mxjdtil.mongodb.net/Cluster0?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('MongoDB connected')
-}).catch((err) => console.log('Could not connect to MongoDB', err))
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true })); // new code from stackoverflow
-app.use(express.json()); // new code from stackoverflow
+const cors= require("cors")
 
 
-app.use('/', userRoutes);
 
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("DB Connection Successful!"))
+  .catch((err) => {
+    console.log(err)
+  });
+
+  app.use(cors())
+  app.use(express.json())
+  app.use("/api/auth", authRoute)
+  app.use("/api/users", userRoute)
+  app.use("/api/products", productRoute)
+  app.use("/api/carts", cartRoute)
+  app.use("/api/orders", orderRoute)
+  app.use("/api/checkout", stripeRoute)
+
+app.listen(process.env.port || 5000, () => {
+  console.log("Backend server is running!")
+})
