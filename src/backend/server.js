@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 
-const userRoute = require("./routes/user")
+const userRoute = require("./routes/users")
 const authRoute = require("./routes/auth")
 const productRoute = require("./routes/product")
 const cartRoute = require("./routes/cart")
@@ -11,8 +11,9 @@ const orderRoute = require("./routes/order")
 const stripeRoute = require("./routes/stripe")
 
 const cors= require("cors")
+const path = require("path")
 
-
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
 
 dotenv.config();
@@ -36,3 +37,9 @@ mongoose
 app.listen(process.env.port || 5000, () => {
   console.log("Backend server is running!")
 })
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', '..', 'dist', "index.html"));
+});
+
+
