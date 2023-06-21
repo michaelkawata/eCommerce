@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 
 
-const KEY = process.env.REACT_APP_STRIPE
+const KEY = "pk_test_51NIrLxEkNg4eAb3UV0dwghY3dXKxAnBBOeaRCJwujlcQNjplwzsdszRTAS5DlSTHEwhQgnrNnQMNCPHLRJIVv6h700ShyMycds"
 
 const Container = styled.div`
 
