@@ -50,24 +50,11 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
     //findOne cart because every user has only one cart
-    const cart = await Cart.findOne({userId: req.params.userId})
+    const cart = await Cart.findOne({ userId: req.params.userId })
     res.status(200).json(cart)
   } catch (err) {
     res.status(500).json(err)
   }
 })
-
-//Get All
-//Only admin can see cart of all users
-router.get("/", verifyTokenAndAdmin, async (req, res) =>{
-  try{
-    const carts = await Cart.find()
-    res.status(200).json(carts)
-  }catch(err){
-    res.status(500). json(err)
-  }
-})
-
-
 
 module.exports = router
