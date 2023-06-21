@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { mobile } from "../responsive"
+import { mobileSmall } from "../responsive"
 
+// Create a styled component called "Container" using styled-components library
 const Container = styled.div`
   height: 30px;
-  background-color: teal;
+  background-color: #000;
   color: white;
   display: flex;
   justify-content: center;
@@ -11,6 +14,8 @@ const Container = styled.div`
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 2px;
+  ${mobile({ fontSize: "12px" })} // Apply the specified styles when the screen size is below the "mobile" breakpoint
+  ${mobileSmall({ fontSize: "10px", textAlign: "center" })} // Apply the specified styles when the screen size is below the "mobileSmall" breakpoint
 `
 
 const Announcement = () => {
@@ -21,4 +26,4 @@ const Announcement = () => {
   );
 }
 
-export default Announcement;
+export default Announcement; 

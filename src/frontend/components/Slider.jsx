@@ -3,6 +3,11 @@ import React from "react";
 import { ArrowBackIosNewOutlined, ArrowForwardIosOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { sliderItems } from "../data";
+// import { mobile } from "../responsive"
+import { tabletSmall } from "../responsive"
+import { tablet } from "../responsive"
+import { Link } from "react-router-dom";
+
 
 
 
@@ -12,6 +17,8 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  ${tabletSmall({ display: "none"})}
+
 `
 
 const Arrow = styled.div`
@@ -50,15 +57,18 @@ const Slide = styled.div`
   display: flex;
   align-items: center;
   background-color: #${props=>props.bg}
+
 `
 
 const ImgContainer = styled.div`
   flex: 1;
   height: 100%;
+  ${tablet({ display: "flex", alignItems: "center" })}
 `
 
 const Image = styled.img`
   height: 80%;
+  ${tablet({ height: "60%"})}
 `
 
 const InfoContainer = styled.div`
@@ -87,11 +97,11 @@ const Button = styled.button`
   cursor: pointer;
 
     &:hover {
-    background-color: teal;
+    background-color: gold;
     transition: ease 0.5s;
 
-    color: #fff;
-    border-color: #fff;
+    color: #000;
+    border-color: #000;
   }
 `
 
@@ -134,7 +144,7 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Description>{item.desc}</Description>
-              <Button>SHOP NOW</Button>
+              <Button><Link to="/products/women" style={{ textDecoration: 'none', color: '#000'}}>SHOP NOW</Link></Button>
             </InfoContainer>
           </Slide>
 

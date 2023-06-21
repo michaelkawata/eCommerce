@@ -3,10 +3,19 @@ import { Facebook, FmdGood, Instagram, Phone, Pinterest, Twitter } from "@mui/ic
 import React from "react";
 import styled from "styled-components";
 
+import { mobile } from "../responsive"
+import { mobileLarge } from "../responsive"
+import { tabletSmall } from "../responsive"
 
+import { Link } from "react-router-dom";
+
+
+//using Styled Componenets
+//*** npm install styled-components
 const Container = styled.div`
   display: flex;
   margin: 20px 15px;
+  ${mobileLarge({ flexDirection: "column", margin: 0 })}
 `
 
 const Left = styled.div`
@@ -14,6 +23,7 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  ${mobileLarge({ backgroundColor: "#000", color: "#fff", width: "100%" })}
 `
 
 const Logo = styled.h1`
@@ -46,6 +56,8 @@ const SocialIcon = styled.div`
 const Center = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({ display: "none" })}
+  ${tabletSmall({ display: "none" })}
 `
 
 const Title = styled.h3`
@@ -69,6 +81,7 @@ const ListItem = styled.li`
 const Right = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({ backgroundColor: "#fff8f8" })}
 `
 
 const ContactItem = styled.div`
@@ -89,7 +102,7 @@ const Footer = ({ item }) => {
         <Logo>MCM</Logo>
         <Description>where style meets comfort,
           offers a wide range of trendy and high-quality clothing for men and women,
-          perfect for every occasion.
+          perfect for every occasion with MCM
         </Description>
         <SocialContainer>
           <SocialIcon color="3B5999">
@@ -111,15 +124,15 @@ const Footer = ({ item }) => {
           Useful Links
         </Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Men Fashion</ListItem>
-          <ListItem>Women Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Home</Link></ListItem>
+          <ListItem><Link to="/cart" style={{ textDecoration: 'none' }}>Cart</Link></ListItem>
+          <ListItem><Link to="/products/men" style={{ textDecoration: 'none' }}>Men Fashion</Link></ListItem>
+          <ListItem><Link to="/products/women" style={{ textDecoration: 'none' }}>Women Fashion</Link></ListItem>
+          <ListItem><Link to="/products/jeans" style={{ textDecoration: 'none' }}>Jeans</Link></ListItem>
+          <ListItem><Link to="/login" style={{ textDecoration: 'none' }}>My Account</Link></ListItem>
+          <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Order Tracking</Link></ListItem>
+          <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Wishlist</Link></ListItem>
+          <ListItem><Link to="/" style={{ textDecoration: 'none' }}>Terms</Link></ListItem>
         </List>
       </Center>
       <Right>
@@ -136,9 +149,9 @@ const Footer = ({ item }) => {
         </ContactItem>
         <ContactItem>
           <MailOutline style={{ marginRight: "10px" }} />
-          contactandshop@marlons.dev
+          contactandshop@mcm.dev
         </ContactItem>
-        <Payment src={require("../assets/images/card-page.jpg")} />
+        {/* <Payment src={require("../images/card-page.jpeg")} /> */}
       </Right>
 
     </Container>

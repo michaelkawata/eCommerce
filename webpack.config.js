@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     //Entry point
-    entry: './src/index.jsx',
+    entry: './src/frontend/index.js',
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
     },
@@ -15,7 +15,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "./src/frontend/index.html"
-        }),
+        })
     ],
     module: {
         rules: [
@@ -40,9 +40,9 @@ module.exports = {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
-            { 
-                test: /\.css$/, 
-                use: ['style-loader', 'css-loader'] 
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.svg$/,
