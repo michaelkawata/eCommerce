@@ -10,6 +10,19 @@ const {
 // Create Express router instance
 const router = require("express").Router();
 
+// Get all users endpoint
+// Only admins can retrieve all user information
+router.get("/", verifyToken, async (req, res) => {
+  const query = req.query.new
+  try {
+    // Find all users. If the 'new' query param is true, only return the 5 most recently created users.
+    const users = query ? await User.find().sort({_id: -1}).limit(5) : await User.find()
+    res.status(200).json(users)
+  } catch (err) {
+    // If there's an error, respond with the error
+    res.status(500).json(err)
+  }
+})
 
 // // Update user endpoint
 // // Users can update their own information
@@ -65,21 +78,6 @@ const router = require("express").Router();
 //     res.status(500).json(err)
 //   }
 // })
-
-
-// Get all users endpoint
-// Only admins can retrieve all user information
-router.get("/", verifyToken, async (req, res) => {
-  const query = req.query.new
-  try {
-    // Find all users. If the 'new' query param is true, only return the 5 most recently created users.
-    const users = query ? await User.find().sort({_id: -1}).limit(5) : await User.find()
-    res.status(200).json(users)
-  } catch (err) {
-    // If there's an error, respond with the error
-    res.status(500).json(err)
-  }
-})
 
 
 module.exports = router

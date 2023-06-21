@@ -20,7 +20,7 @@ router.post("/", verifyToken, async (req, res) => {
 })
 
 // Update an existing cart
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => { // Only the user who owns the cart can update it
   try {
     // Find cart by id and update it with request body
     const updatedCart = await Cart.findByIdAndUpdate(req.params.id, {
@@ -56,7 +56,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 })
 
 // Get all carts (admin only)
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req, res) => { 
   try {
     const carts = await Cart.find() // Find all carts
     res.status(200).json(carts) // Respond with the found carts

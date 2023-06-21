@@ -13,8 +13,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 
-
-
 const KEY = "sk_test_51NIrLxEkNg4eAb3UbCXGMDFseAup62r6SGcZCqL2qzbnCE8m00QgI9DVEGwevsw6eWHuTNIPzuCq6O3sjtRdOLMS009ejopbeV"
 
 const Container = styled.div`
@@ -262,7 +260,8 @@ const Cart = () => {
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
           <TopButton type="filled">
-            {/* https://www.npmjs.com/package/react-stripe-checkout - react stripe checkout */}
+            {/* https://www.npmjs.com/package/react-stripe-checkout - react stripe checkout 
+                https://www.npmjs.com/package/react-stripe-checkout?activeTab=readme*/}
             <StripeCheckout
               name="MCM"
               image="https://ecommercemcm.s3.us-west-1.amazonaws.com/just+shirts/marbaker.swe_japanese_desiner_shirt_hip_hop_fashion_1066938d-eef0-4c40-b858-59c1c8691176+copy1.png"

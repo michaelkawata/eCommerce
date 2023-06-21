@@ -1,5 +1,5 @@
-// Import the jwt (JSON Web Token) module
 const jwt = require("jsonwebtoken")
+
 
 // Middleware function to verify the token present in the request header
 const verifyToken = (req, res, next) => {
@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
   const authHeader = req.headers.token
 
   if(authHeader){
-      // Extract the actual token from the "Bearer" string
+      // Extract "Bearer" from the token from the string
       const token = authHeader.split(" ")[1]
 
       // Verify the token using JWT and the secret key

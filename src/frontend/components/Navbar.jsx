@@ -11,8 +11,7 @@ import { tabletSmall } from "../responsive"
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-//using Styled Componenets
-//*** npm install styled-components or yarn add styled-components */
+//Using Styled Componenets
 const Container = styled.div`
   height: 60px;
   // position: sticky;

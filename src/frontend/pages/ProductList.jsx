@@ -49,15 +49,15 @@ const Option =styled.option`
 
 const ProductList = () => {
   const location = useLocation()
-  const cat = location.pathname.split("/")[2]
-  const [filters, setFilters] = useState({})
+  const cat = location.pathname.split("/")[2] // split pathname by "/" and get the second element
+  const [filters, setFilters] = useState({}) // useState is a hook that takes in a parameter of a Object
   const [sort, setSort ] = useState("newest")
 
-  const handleFilters = (e) => {
+  const handleFilters = (e) => { 
     const value = e.target.value;
-    setFilters({
+    setFilters({ // setFilters is a function that takes in a parameter
       ...filters,
-      [e.target.name]: value
+      [e.target.name]: value // e.target.name is the name of the select tag
     })
   }
 

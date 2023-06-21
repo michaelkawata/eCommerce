@@ -2,10 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { categories } from "../data";
 import CategoryItem from "./CategoryItem";
-// import { mobile } from "../responsive"
-import { tabletSmall } from "../responsive"
+import { tabletSmall } from "../responsive" // import { mobile } from "../responsive"
 
-// Create a styled component called "Container" using styled-components library
 const Container = styled.div`
   display: flex;
   padding: 20px;
@@ -13,7 +11,6 @@ const Container = styled.div`
   ${tabletSmall({ flexDirection: "column", padding: 0 })} // Apply the specified styles when the screen size is below the "tabletSmall" breakpoint
 `
 
-// Create a functional component called "Categories"
 const Categories = () => {
   return (
     <Container>

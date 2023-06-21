@@ -40,17 +40,22 @@ const Products = ({ cat, filters, sort }) => {
     getProducts(); // Invoke the function to fetch products
   }, [cat]); // Depend on the category, so the products are refetched when the category changes
 
+
+
+
   // Effect hook for filtering products based on selected filters
   useEffect(() => {
     cat &&
       setFilteredProducts( // Filter the products based on the selected filters
         products.filter((item) => 
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value) 
+          Object.entries(filters).every(([key, value]) => // Check if all the filters are satisfied
+            item[key].includes(value) // Check if the product satisfies the filter
           )
         )
       );
   }, [products, cat, filters]); // Depend on products, category and filters
+
+
 
   // Effect hook for sorting the filtered products based on the selected sort option (newest, lowest price, highest price)
   useEffect(() => {
@@ -70,6 +75,7 @@ const Products = ({ cat, filters, sort }) => {
       );
     }
   }, [sort]); // Depend on the sort option
+  
 
   return (
     <Container>

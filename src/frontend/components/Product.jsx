@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { mobile, mobileSmall, mobileLarge, tablet, screenLarge } from "../responsive"
 
+//Using Styled Componenets
 const Info = styled.div`
   opacity: 0;
   width: 100%;

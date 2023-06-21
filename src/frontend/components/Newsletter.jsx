@@ -6,6 +6,7 @@ import { mobile } from "../responsive"
 import { mobileSmall } from "../responsive"
 import { tabletSmall } from "../responsive"
 
+//Using Styled Componenets
 const Container = styled.div`
   height: 60vh;
   background-color: #000;

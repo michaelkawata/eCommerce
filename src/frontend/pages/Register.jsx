@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-// import RegisterImage from "../images/register-page.jpg"
+import { useNavigate } from 'react-router-dom';
 
-import { mobileSmall } from "../responsive"
-import { mobileLarge } from "../responsive"
-import { tablet } from "../responsive"
-
+import { mobileSmall } from "../responsive";
+import { mobileLarge } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,32 +54,97 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   ${mobileSmall({ width: "100%" })}
-
 `
 
-
-
 const Register = () => {
-  
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate(); // Use the useNavigate hook
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          username,
+          email,
+          password,
+        }),
+      });
+      
+      if (!response.ok) throw new Error(response.statusText);
+
+      const data = await response.json();
+      console.log(data); // Display the response data in the console
+      navigate("/"); // Use the navigate function to redirect to home page
+      
+    } catch (error) {
+      console.log(error); // Display the error message in the console
+    }
+  };
+
   return (
-      <Container>
-        <Wrapper>
-          <Title>CREATE AN ACCOUNT</Title>
-          <Form>
-            <Input placeholder="First Name"/>
-            <Input placeholder="Last Name"/>
-            <Input placeholder="Username"/>
-            <Input placeholder="Email"/>
-            <Input placeholder="Password" type="password"/>
-            <Input placeholder="Confirm Password" type="password"/>
-            <Agreement>
-              By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
-            </Agreement>
-            <Button>CREATE ACCOUNT</Button>
-          </Form>
-        </Wrapper>
-      </Container>
+    <Container>
+      <Wrapper>
+        <Title>CREATE AN ACCOUNT</Title>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <Input
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <Input
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            placeholder="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <Agreement>
+            By registering an account, you agree to abide by our terms and
+            conditions, including our <b>PRIVACY POLICY</b> and{" "}
+            <b>USAGE GUIDELINES</b>.
+          </Agreement>
+          <Button type="submit">CREATE ACCOUNT</Button>
+        </Form>
+      </Wrapper>
+    </Container>
   );
-}
+};
 
 export default Register;
