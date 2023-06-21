@@ -61,6 +61,7 @@ const Button = styled.button`
 
 
 const Register = () => {
+  
   return (
       <Container>
         <Wrapper>
@@ -70,8 +71,8 @@ const Register = () => {
             <Input placeholder="Last Name"/>
             <Input placeholder="Username"/>
             <Input placeholder="Email"/>
-            <Input placeholder="Password"/>
-            <Input placeholder="Confirm Password"/>
+            <Input placeholder="Password" type="password"/>
+            <Input placeholder="Confirm Password" type="password"/>
             <Agreement>
               By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
             </Agreement>
