@@ -44,24 +44,24 @@ const Language = styled.span`
   font-size: 14px;
   cursor: pointer;
   // ${mobile({ display: "none" })}
-  ${tabletSmall({ display: "none"})}
+  ${tabletSmall({ display: "none" })}
 `
 
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-  ${mobileSmall({ display: "none" })}
+// const SearchContainer = styled.div`
+//   border: 0.5px solid lightgray;
+//   display: flex;
+//   align-items: center;
+//   margin-left: 25px;
+//   padding: 5px;
+//   ${mobileSmall({ display: "none" })}
 
-`
-//styled input creates input
-const Input = styled.input`
-  border: none;
-  ${mobile({ width: "50px" })}
+// `
+// //styled input creates input
+// const Input = styled.input`
+//   border: none;
+//   ${mobile({ width: "50px" })}
 
-`
+// `
 
 const Center = styled.div`
   flex: 1;
@@ -88,7 +88,7 @@ const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
-  ${mobile({ flex: 2, fontSize: "12px", marginLeft: "10px"})}
+  ${mobile({ flex: 2, fontSize: "12px", marginLeft: "10px" })}
 `
 
 const Navbar = () => {
@@ -97,18 +97,26 @@ const Navbar = () => {
 
   return (
     <Container>
-        <Wrapper>
+      <Wrapper>
         <Left>
           <MenuIcon>
-              <Menu />
+            <Menu />
           </MenuIcon>
           <Language>
-            EN
+            <Link to="/products/men" style={{ textDecoration: 'none', color: '#000' }}>
+              <MenuItem>Men</MenuItem>
+            </Link>
           </Language>
-          <SearchContainer>
-            <Input placeholder="Search"/>
-            <Search style={{color:'#000', fontSize: "16px"}}/>
-          </SearchContainer>
+          <Language>
+            <Link to="/products/women" style={{ textDecoration: 'none', color: '#000' }}>
+              <MenuItem>Women</MenuItem>
+            </Link>
+          </Language>
+          <Language>
+            <Link to="/products/jeans" style={{ textDecoration: 'none', color: '#000' }}>
+              <MenuItem>Jeans</MenuItem>
+            </Link>
+          </Language>
         </Left>
         <Center>
           <Logo>
@@ -124,15 +132,15 @@ const Navbar = () => {
           </Link>
           <Link to="/cart">
             <MenuItem>
-          {/* badge and mail icon from material ui */}
-          {/* using quantity from cartRedux.js */}
+              {/* badge and mail icon from material ui */}
+              {/* using quantity from cartRedux.js */}
               <Badge badgeContent={quantity} color="primary">
-                  <ShoppingCartOutlinedIcon />
+                <ShoppingCartOutlinedIcon />
               </Badge>
-          </MenuItem>
+            </MenuItem>
           </Link>
         </Right>
-        </Wrapper>
+      </Wrapper>
     </Container>
   );
 }

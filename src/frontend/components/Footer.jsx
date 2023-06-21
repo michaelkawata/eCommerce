@@ -10,7 +10,8 @@ import { tabletSmall } from "../responsive"
 import { Link } from "react-router-dom";
 
 
-
+//using Styled Componenets
+//*** npm install styled-components
 const Container = styled.div`
   display: flex;
   margin: 20px 15px;

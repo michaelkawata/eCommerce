@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 
 
-const KEY = "pk_test_51NIrLxEkNg4eAb3UV0dwghY3dXKxAnBBOeaRCJwujlcQNjplwzsdszRTAS5DlSTHEwhQgnrNnQMNCPHLRJIVv6h700ShyMycds"
+const KEY = "sk_test_51NIrLxEkNg4eAb3UbCXGMDFseAup62r6SGcZCqL2qzbnCE8m00QgI9DVEGwevsw6eWHuTNIPzuCq6O3sjtRdOLMS009ejopbeV"
 
 const Container = styled.div`
 
@@ -236,11 +236,11 @@ const Button = styled.button`
 
 const Cart = () => {
   //retrieves the value of cart state from redux store and assign it to cart variable
-  const cart = useSelector(state => state.cart)
-  const [stripeToken, setStripeToken] = useState(null)
+  const cart = useSelector(state => state.cart) // useSelector is a hook that allows you to extract data from the Redux store state, using a selector function.
+  const [stripeToken, setStripeToken] = useState(null) //stripeToken is a state variable that is set to null
 
   const onToken = (token) => {
-    setStripeToken(token)
+    setStripeToken(token) //setStripeToken is a function that takes in a token and sets the state of stripeToken to that token
   }
   console.log(stripeToken)
   return (
@@ -284,7 +284,7 @@ const Cart = () => {
           <Info>
             <Hr />
 
-            {cart.products.map(product => (
+            {cart.products.map(product => ( //map through the products in the cart and display them
               <Product>
                 <ProductDetails>
                   <Image src={product.img} />
