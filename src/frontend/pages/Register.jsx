@@ -7,6 +7,7 @@ import { mobileLarge } from "../responsive"
 import { tablet } from "../responsive"
 
 
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -58,29 +59,91 @@ const Button = styled.button`
 
 `
 
-
-
 const Register = () => {
-  
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate form data before sending the request
+    if (password !== confirmPassword) {
+      // Passwords don't match
+      return;
+    }
+
+    try {
+      const response = await axios.post("/register", {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+      });
+
+      // Handle success response
+      console.log(response.data); // Display the response data in the console
+    } catch (error) {
+      // Handle error response
+      if (error.response && error.response.data) {
+        console.log(error.response.data); // Display the error message in the console
+      } else {
+        console.log(error.message); // Display the generic error message in the console
+      }
+    }
+  };
+
   return (
-      <Container>
-        <Wrapper>
-          <Title>CREATE AN ACCOUNT</Title>
-          <Form>
-            <Input placeholder="First Name"/>
-            <Input placeholder="Last Name"/>
-            <Input placeholder="Username"/>
-            <Input placeholder="Email"/>
-            <Input placeholder="Password" type="password"/>
-            <Input placeholder="Confirm Password" type="password"/>
-            <Agreement>
-              By registering an account, you agree to abide by our terms and conditions, including our <b>PRIVACY POLICY</b> and <b>USAGE GUIDELINES</b>.
-            </Agreement>
-            <Button>CREATE ACCOUNT</Button>
-          </Form>
-        </Wrapper>
-      </Container>
+    <Container>
+      <Wrapper>
+        <Title>CREATE AN ACCOUNT</Title>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <Input
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <Input
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            placeholder="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <Agreement>
+            By registering an account, you agree to abide by our terms and
+            conditions, including our <b>PRIVACY POLICY</b> and{" "}
+            <b>USAGE GUIDELINES</b>.
+          </Agreement>
+          <Button type="submit">CREATE ACCOUNT</Button>
+        </Form>
+      </Wrapper>
+    </Container>
   );
-}
+};
 
 export default Register;
