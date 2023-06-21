@@ -57,14 +57,8 @@ const router = require("express").Router();
 //     // Find the user by ID and respond with the user's information
 //     const user = await User.findById(req.params.id)
 
-//     // Exclude the password from the returned user data
-//     const { password, ...others } = user._doc;
-//     res.status(200).json(others)
-//   } catch (err) {
-//     // If there's an error, respond with the error
-//     res.status(500).json(err)
-//   }
-// })
+// Get User
+router.get("/find/:id", verifyTokenAndAdmin, userController.findUser);
 
 
 // Get all users endpoint
