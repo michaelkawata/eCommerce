@@ -43,7 +43,7 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "start": "node src/backend/server.js",
+    "start": "react-scripts start",
     "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
