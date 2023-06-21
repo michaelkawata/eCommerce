@@ -14,7 +14,8 @@ module.exports = {
     mode: 'production',
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/frontend/index.html"
+            template: "./src/frontend/index.html",
+            favicon: "./src/frontend/images/favicon.ico"
         }),
     ],
     module: {
@@ -49,7 +50,7 @@ module.exports = {
                 loader: 'svg-inline-loader'
             },
             {
-                test: /\.(png|jpe?g|gif|woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                test: /\.(png|jpe?g|gif|woff(2)?|ttf|eot|svg|ico)(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]',
