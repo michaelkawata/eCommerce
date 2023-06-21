@@ -1,12 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-// import RegisterImage from "../images/register-page.jpg"
 
-import { mobileSmall } from "../responsive"
-import { mobileLarge } from "../responsive"
-import { tablet } from "../responsive"
-
-
+import { mobileSmall } from "../responsive";
+import { mobileLarge } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -59,6 +56,7 @@ const Button = styled.button`
 
 `
 
+
 const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -70,30 +68,32 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form data before sending the request
     if (password !== confirmPassword) {
       // Passwords don't match
       return;
     }
 
     try {
-      const response = await axios.post("/register", {
-        firstName,
-        lastName,
-        username,
-        email,
-        password,
+      const response = await fetch("/api/auth/register", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          username,
+          email,
+          password,
+        }),
       });
 
-      // Handle success response
-      console.log(response.data); // Display the response data in the console
+      if (!response.ok) throw new Error(response.statusText);
+
+      const data = await response.json();
+      console.log(data); // Display the response data in the console
     } catch (error) {
-      // Handle error response
-      if (error.response && error.response.data) {
-        console.log(error.response.data); // Display the error message in the console
-      } else {
-        console.log(error.message); // Display the generic error message in the console
-      }
+      console.log(error); // Display the error message in the console
     }
   };
 
