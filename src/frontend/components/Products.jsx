@@ -1,6 +1,6 @@
 import React from "react"; // React library
-import styled from "styled-components"; 
-import Product from "./Product"; 
+import styled from "styled-components";
+import Product from "./Product";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -29,8 +29,8 @@ const Products = ({ cat, filters, sort }) => {
         const res = await axios.get(
           // If category is specified, fetch products from that category, else fetch all products
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : `http://localhost:5000/api/products`
+            ? `/api/products?category=${cat}`
+            : `/api/products`
         );
         setProducts(res.data); // Save the fetched products to state
       } catch (err) {
@@ -44,9 +44,9 @@ const Products = ({ cat, filters, sort }) => {
   useEffect(() => {
     cat &&
       setFilteredProducts( // Filter the products based on the selected filters
-        products.filter((item) => 
+        products.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value) 
+            item[key].includes(value)
           )
         )
       );
@@ -76,11 +76,11 @@ const Products = ({ cat, filters, sort }) => {
       {/* If a category is selected, display the filtered products, else display a limited number of products */}
       {cat
         ? filteredProducts.map((item) => (
-            <Product item={item} key={item.id} /> // Mapping through filtered products
-          ))
+          <Product item={item} key={item.id} /> // Mapping through filtered products
+        ))
         : products.slice(0, 8).map((item) => (
-            <Product item={item} key={item.id} /> // Displaying only 8 products if no category is selected
-          ))}
+          <Product item={item} key={item.id} /> // Displaying only 8 products if no category is selected
+        ))}
     </Container>
   );
 }
