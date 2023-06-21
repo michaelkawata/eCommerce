@@ -47,21 +47,21 @@ const Language = styled.span`
   ${tabletSmall({ display: "none"})}
 `
 
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-  ${mobileSmall({ display: "none" })}
+// const SearchContainer = styled.div`
+//   border: 0.5px solid lightgray;
+//   display: flex;
+//   align-items: center;
+//   margin-left: 25px;
+//   padding: 5px;
+//   ${mobileSmall({ display: "none" })}
 
-`
-//styled input creates input
-const Input = styled.input`
-  border: none;
-  ${mobile({ width: "50px" })}
+// `
+// //styled input creates input
+// const Input = styled.input`
+//   border: none;
+//   ${mobile({ width: "50px" })}
 
-`
+// `
 
 const Center = styled.div`
   flex: 1;
@@ -103,12 +103,20 @@ const Navbar = () => {
               <Menu />
           </MenuIcon>
           <Language>
-            EN
+            <Link to="/products/men" style={{ textDecoration: 'none', color: '#000' }}>
+            <MenuItem>Men</MenuItem>
+          </Link>
           </Language>
-          <SearchContainer>
-            <Input placeholder="Search"/>
-            <Search style={{color:'#000', fontSize: "16px"}}/>
-          </SearchContainer>
+          <Language>
+            <Link to="/products/women" style={{ textDecoration: 'none', color: '#000' }}>
+            <MenuItem>Women</MenuItem>
+          </Link>
+          </Language>
+          <Language>
+            <Link to="/products/jeans" style={{ textDecoration: 'none', color: '#000' }}>
+            <MenuItem>Jeans</MenuItem>
+          </Link>
+          </Language>
         </Left>
         <Center>
           <Logo>

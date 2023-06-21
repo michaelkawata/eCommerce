@@ -1,4 +1,3 @@
-// Import necessary dependencies
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive"
@@ -19,7 +18,6 @@ const Container = styled.div`
   ${mobileSmall({ fontSize: "10px", textAlign: "center" })} // Apply the specified styles when the screen size is below the "mobileSmall" breakpoint
 `
 
-// Create a functional component called "Announcement"
 const Announcement = () => {
   return (
     <Container>
@@ -28,4 +26,4 @@ const Announcement = () => {
   );
 }
 
-export default Announcement; // Export the Announcement component as the default export
+export default Announcement; 

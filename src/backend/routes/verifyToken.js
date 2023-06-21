@@ -1,4 +1,3 @@
-// Import the jwt (JSON Web Token) module
 const jwt = require("jsonwebtoken")
 
 // Middleware function to verify the token present in the request header
@@ -26,33 +25,27 @@ const verifyToken = (req, res, next) => {
   }
 }
 
-// Middleware function to verify the token and the user's authorization
-const verifyTokenAndAuthorization = (req, res, next) => {
-  // First, verify the token
-  verifyToken(req, res, () => {
-      // If the user's ID matches the ID in the request parameters or if the user is an admin, pass control to the next middleware function
-      if (req.user.id === req.params.id || req.user.isAdmin){
-        next()
-      } else {
-        // If the user doesn't have the right authorization, send a "You do not have the authorization to do so!" message
-        res.status(403).json("You do not have the authorization to do so!")
-      }
-  })
-}
+// // Middleware function to verify the token and the user's authorization
+// const verifyTokenAndAuthorization = (req, res, next) => {
+//   verifyToken(req, res, () => {
+//       if (req.user.id === req.params.id || req.user.isAdmin){
+//         next()
+//       } else {
+//         res.status(403).json("You do not have the authorization to do so!")
+//       }
+//   })
+// }
 
-// Middleware function to verify the token and the admin's authorization
-const verifyTokenAndAdmin = (req, res, next) => {
-  // First, verify the token
-  verifyToken(req, res, () => {
-      // If the user is an admin, pass control to the next middleware function
-      if (req.user.isAdmin){
-        next()
-      } else {
-        // If the user isn't an admin, send a "You do not have the authorization to do so!" message
-        res.status(403).json("You do not have the authorization!")
-      }
-  })
-}
+// // Middleware function to verify the token and the user's admin status
+// const verifyTokenAndAdmin = (req, res, next) => {
+//       verifyToken(req, res, () => {
+//       if (req.user.isAdmin){
+//         next()
+//       } else {
+//         res.status(403).json("You do not have the authorization!")
+//       }
+//   })
+// }
 
-// Export the middleware functions
+
 module.exports = { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin }

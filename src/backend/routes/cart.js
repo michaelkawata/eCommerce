@@ -65,5 +65,4 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   }
 })
 
-// Export the router to be used in other files
 module.exports = router
