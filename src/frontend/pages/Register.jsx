@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
 import { mobileSmall } from "../responsive";
 import { mobileLarge } from "../responsive";
@@ -53,9 +54,7 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   ${mobileSmall({ width: "100%" })}
-
 `
-
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -64,17 +63,17 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      // Passwords don't match
       return;
     }
 
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,6 +91,8 @@ const Register = () => {
 
       const data = await response.json();
       console.log(data); // Display the response data in the console
+      navigate("/"); // Use the navigate function to redirect to home page
+
     } catch (error) {
       console.log(error); // Display the error message in the console
     }
