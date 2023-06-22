@@ -16,5 +16,5 @@ export const publicRequest = axios.create({
 // This instance will be used for user specific requests that require authentication.
 export const userRequest = axios.create({
   baseURL: BASE_URL,
-  headers: {token: `Bearer ${TOKEN}`} // Note: This should be 'headers' not 'header'
+  headers: { token: `Bearer ${TOKEN}` } // Note: This should be 'headers' not 'header'
 })
